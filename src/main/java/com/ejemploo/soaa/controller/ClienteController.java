@@ -30,7 +30,7 @@ public class ClienteController {
         ServiceResponse serviceResponse = new ServiceResponse();
         int result = iClienteService.save(cliente);
         if (result == 1){
-            serviceResponse.setMessage("Producto guardado correctamente");
+            serviceResponse.setMessage("Cliente guardado correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }

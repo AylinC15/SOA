@@ -8,8 +8,8 @@ public class Cliente {
 
     int id_cliente;
     String name;
-    int telefono;
-    int RUC;
+    String telefono;
+    String RUC;
     String direccion;
     int estado;
 
