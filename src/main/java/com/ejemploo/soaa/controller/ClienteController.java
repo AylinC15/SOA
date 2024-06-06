@@ -41,7 +41,7 @@ public class ClienteController {
         ServiceResponse serviceResponse = new ServiceResponse();
         int result = iClienteService.update(cliente);
         if (result == 1){
-            serviceResponse.setMessage("Producto actualizado correctamente");
+            serviceResponse.setMessage("Cliente actualizado correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }

@@ -30,8 +30,8 @@ public class ClienteRepository implements IClienteRepository{
 
     @Override
     public int update(Cliente cliente) {
-        String SQL = "UPDATE cliente SET name=?, telefono = ?, RUC = ?,direccion= ?)";
-        return jdbcTemplate.update(SQL, new Object[]{cliente.getName(),cliente.getTelefono(),cliente.getRUC(),cliente.getDireccion()});
+        String SQL = "UPDATE cliente SET name=?, telefono = ?, RUC = ?,direccion= ? WHERE id_cliente = ?";
+        return jdbcTemplate.update(SQL, new Object[]{cliente.getName(),cliente.getTelefono(),cliente.getRUC(),cliente.getDireccion(), cliente.getId_cliente()});
     }
 
     @Override
