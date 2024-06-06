@@ -21,8 +21,8 @@ public class AlmacenRepository implements IAlmacenRepository{
 
     @Override
     public int save(Producto producto) {
-        String SQL = "INSERT INTO producto VALUES (?,?,?,?,?)";
-        return jdbcTemplate.update(SQL, new Object[]{producto.getName(),producto.getMarca(),producto.getCantidad(),producto.getPrecio(),producto.getEstado()});
+        String SQL = "INSERT INTO producto VALUES (?,?,?,?,?,?)";
+        return jdbcTemplate.update(SQL, new Object[]{producto.getId_producto(),producto.getName(),producto.getMarca(),producto.getCantidad(),producto.getPrecio(),producto.getEstado()});
     }
 
     @Override
@@ -33,7 +33,7 @@ public class AlmacenRepository implements IAlmacenRepository{
 
     @Override
     public int deleteByName(String name) {
-        String SQL = "UPDATE producto SET estado=1 WHERE name=?";
+        String SQL = "UPDATE producto SET estado= 0 WHERE name=?";
         return jdbcTemplate.update(SQL, new Object[]{name});
     }
 }

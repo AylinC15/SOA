@@ -57,6 +57,4 @@ public class ProductoController {
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }
 
-
-
 }
