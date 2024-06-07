@@ -60,4 +60,27 @@ public class ClienteService implements IClienteService {
 
         return row;
     }
+
+    @Override
+    public Cliente findByRuc(String ruc) {
+        Cliente cliente;
+        try {
+            cliente = iClienteRepository.findByRuc(ruc);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return cliente;
+    }
+
+    @Override
+    public Cliente findByNombreIgnoreCase(String nombre) {
+        Cliente cliente;
+        try {
+            cliente = iClienteRepository.findByNombreIgnoreCase(nombre);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return cliente;
+    }
+
 }

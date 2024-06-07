@@ -46,15 +46,35 @@ public class ClienteController {
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/borrar")
+    @GetMapping("/borrar/{name}")
     public ResponseEntity<ServiceResponse> update(@PathVariable String name){
 
         ServiceResponse serviceResponse = new ServiceResponse();
         int result = iClienteService.deleteByName(name);
         if (result == 1){
-            serviceResponse.setMessage("Producto borrado correctamente");
+            serviceResponse.setMessage("Cliente borrado correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/buscarPorRuc/{ruc}")
+    public ResponseEntity<Cliente> obtenerClientePorRuc(@PathVariable String ruc) {
+        Cliente cliente = iClienteService.findByRuc(ruc);
+        if (cliente != null) {
+            return new ResponseEntity<>(cliente, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/buscarPorNombre/{nombre}")
+    public ResponseEntity<Cliente> obtenerClientePorNombre(@PathVariable String nombre) {
+        Cliente cliente = iClienteService.findByNombreIgnoreCase(nombre);
+        if (cliente != null) {
+            return new ResponseEntity<>(cliente, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
