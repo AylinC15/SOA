@@ -52,10 +52,10 @@ public class ClienteRepository implements IClienteRepository {
     }
 
     @Override
-    public Cliente findByNombreIgnoreCase(String nombre) {
+    public Cliente findByNombreIgnoreCase(String name) {
         try {
             String SQL = "SELECT * FROM cliente WHERE UPPER(name) = UPPER(?)";
-            return jdbcTemplate.queryForObject(SQL, BeanPropertyRowMapper.newInstance(Cliente.class), nombre);
+            return jdbcTemplate.queryForObject(SQL, BeanPropertyRowMapper.newInstance(Cliente.class), name);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }

@@ -67,9 +67,9 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("/buscarPorNombre/{nombre}")
-    public ResponseEntity<Cliente> obtenerClientePorNombre(@PathVariable String nombre) {
-        Cliente cliente = iClienteService.findByNombreIgnoreCase(nombre);
+    @GetMapping("/buscarPorNombre/{name}")
+    public ResponseEntity<Cliente> obtenerClientePorNombre(@PathVariable String name) {
+        Cliente cliente = iClienteService.findByNombreIgnoreCase(name);
         if (cliente != null) {
             return new ResponseEntity<>(cliente, HttpStatus.OK);
         } else {
