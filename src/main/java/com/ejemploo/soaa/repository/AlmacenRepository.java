@@ -27,8 +27,8 @@ public class AlmacenRepository implements IAlmacenRepository{
 
     @Override
     public int update(Producto producto) {
-        String SQL = "UPDATE producto SET name=?,marca=?,cantidad=?,precio=?";
-        return jdbcTemplate.update(SQL, new Object[]{producto.getName(),producto.getMarca(),producto.getCantidad(),producto.getPrecio(),producto.getEstado()});
+        String SQL = "UPDATE producto SET name=?,marca=?,cantidad=?,precio=? WHERE id_producto = ?";
+        return jdbcTemplate.update(SQL, new Object[]{producto.getName(),producto.getMarca(),producto.getCantidad(),producto.getPrecio(),producto.getId_producto()});
     }
 
     @Override

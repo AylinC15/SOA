@@ -46,7 +46,7 @@ public class ProductoController {
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/borrar")
+    @GetMapping("/borrar/{name}")
     public ResponseEntity<ServiceResponse> update(@PathVariable String name){
 
         ServiceResponse serviceResponse = new ServiceResponse();
