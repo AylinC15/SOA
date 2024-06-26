@@ -15,7 +15,7 @@ public class AlmacenRepository implements IAlmacenRepository{
     private JdbcTemplate jdbcTemplate;
     @Override
     public List<Producto> findAll() {
-        String SQL = "SELECT * FROM producto WHERE estado = 1";
+        String SQL = "SELECT p.id_producto, p.name, p.marca, p.precio, p.cantidad, pr.nombre_proveedor FROM producto p INNER JOIN proveedor pr ON p.id_proveedor = pr.id_proveedor WHERE p.estado = '1';";
         return jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(Producto.class));
     }
 
@@ -36,4 +36,6 @@ public class AlmacenRepository implements IAlmacenRepository{
         String SQL = "UPDATE producto SET estado= 0 WHERE name=?";
         return jdbcTemplate.update(SQL, new Object[]{name});
     }
+
+
 }

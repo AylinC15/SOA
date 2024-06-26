@@ -1,7 +1,6 @@
 package com.ejemploo.soaa.repository;
 
 import com.ejemploo.soaa.model.Cliente;
-import com.ejemploo.soaa.model.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

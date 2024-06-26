@@ -1,7 +1,7 @@
 package com.ejemploo.soaa.repository;
 
 import com.ejemploo.soaa.model.Cliente;
-import com.ejemploo.soaa.model.Producto;
+
 import com.ejemploo.soaa.service.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

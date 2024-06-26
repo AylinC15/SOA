@@ -12,4 +12,5 @@ public class Producto {
     double precio;
     int estado;
 
+    private String nombre_proveedor;
 }
