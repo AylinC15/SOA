@@ -18,20 +18,20 @@ public class ClienteRepository implements IClienteRepository {
 
     @Override
     public List<Cliente> findAll() {
-        String SQL = "SELECT * FROM cliente WHERE estado = 1";
+        String SQL = "SELECT id_cliente, nombre, telefono, ruc, direccion FROM cliente WHERE estado = 1";
         return jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(Cliente.class));
     }
 
     @Override
     public int save(Cliente cliente) {
-        String SQL = "INSERT INTO cliente VALUES (?,?,?,?,?)";
-        return jdbcTemplate.update(SQL, new Object[]{cliente.getName(), cliente.getTelefono(), cliente.getRUC(), cliente.getDireccion(), cliente.getEstado()});
+        String SQL = "INSERT INTO cliente (nombre,telefono, ruc,direccion) VALUES (?,?,?,?)";
+        return jdbcTemplate.update(SQL, new Object[]{cliente.getNombre(), cliente.getTelefono(), cliente.getRUC(), cliente.getDireccion()});
     }
 
     @Override
     public int update(Cliente cliente) {
-        String SQL = "UPDATE cliente SET name=?, telefono = ?, RUC = ?,direccion= ? WHERE id_cliente = ?";
-        return jdbcTemplate.update(SQL, new Object[]{cliente.getName(), cliente.getTelefono(), cliente.getRUC(), cliente.getDireccion(), cliente.getId_cliente()});
+        String SQL = "UPDATE cliente SET nombre=?, telefono = ?, RUC = ?,direccion= ? WHERE id_cliente = ?";
+        return jdbcTemplate.update(SQL, new Object[]{cliente.getNombre(), cliente.getTelefono(), cliente.getRUC(), cliente.getDireccion(), cliente.getId_cliente()});
     }
 
     @Override

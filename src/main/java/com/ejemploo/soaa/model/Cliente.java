@@ -7,7 +7,7 @@ import lombok.Data;
 public class Cliente {
 
     int id_cliente;
-    String name;
+    String nombre;
     String telefono;
     String RUC;
     String direccion;
