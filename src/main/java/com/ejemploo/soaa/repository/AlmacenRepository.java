@@ -21,14 +21,14 @@ public class AlmacenRepository implements IAlmacenRepository{
 
     @Override
     public int save(Producto producto) {
-        String SQL = "INSERT INTO producto VALUES (?,?,?,?,?,?)";
-        return jdbcTemplate.update(SQL, new Object[]{producto.getId_producto(),producto.getName(),producto.getMarca(),producto.getCantidad(),producto.getPrecio(),producto.getEstado()});
+        String SQL = "INSERT INTO producto (name, marca, precio, cantidad, id_proveedor) VALUES (?,?,?,?,?)";
+        return jdbcTemplate.update(SQL, new Object[]{producto.getName(), producto.getMarca(), producto.getPrecio(), producto.getCantidad(), producto.getId_proveedor()});
     }
 
     @Override
     public int update(Producto producto) {
-        String SQL = "UPDATE producto SET name=?,marca=?,cantidad=?,precio=? WHERE id_producto = ?";
-        return jdbcTemplate.update(SQL, new Object[]{producto.getName(),producto.getMarca(),producto.getCantidad(),producto.getPrecio(),producto.getId_producto()});
+        String SQL = "UPDATE producto SET name=?,marca=?,cantidad=?,precio=?, id_proveedor=? WHERE id_producto = ?";
+        return jdbcTemplate.update(SQL, new Object[]{producto.getName(),producto.getMarca(),producto.getCantidad(),producto.getPrecio(), producto.getId_proveedor(),producto.getId_producto()});
     }
 
     @Override
