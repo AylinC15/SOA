@@ -2,6 +2,7 @@ package com.ejemploo.soaa.controller;
 
 import com.ejemploo.soaa.model.ServiceResponse;
 import com.ejemploo.soaa.model.Tablero;
+
 import com.ejemploo.soaa.service.ITableroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,11 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tablero")
-@CrossOrigin("*")
 public class TableroController {
 
     @Autowired
     private ITableroService iTableroService;
+
+
 
 
 
@@ -25,6 +27,12 @@ public class TableroController {
         var result = iTableroService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    /*@GetMapping("/tablero")
+    public String listarTablero(Model model) {
+        model.addAttribute("tableros", tableroRepository.findAll() );
+        return "tablero";
+    }*/
+
 
     @PostMapping("/guardar")
     public ResponseEntity<ServiceResponse> save(@RequestBody Tablero tablero){

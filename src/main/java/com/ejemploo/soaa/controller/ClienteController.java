@@ -12,17 +12,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cliente")
-@CrossOrigin("*")
 public class ClienteController {
 
     @Autowired
     private IClienteService iClienteService;
+
 
     @GetMapping("/lista")
     public ResponseEntity<List<Cliente>> list(){
         var result = iClienteService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 
     @PostMapping("/guardar")
     public ResponseEntity<ServiceResponse> save(@RequestBody Cliente cliente){
