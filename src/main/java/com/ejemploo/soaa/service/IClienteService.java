@@ -13,4 +13,5 @@ public interface IClienteService {
     public int deleteByName (String name);
     Cliente findByRuc(String ruc);
     Cliente findByNombreIgnoreCase(String nombre);
+    Cliente findById(int id);
 }

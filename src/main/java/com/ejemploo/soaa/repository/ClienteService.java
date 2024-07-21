@@ -83,4 +83,16 @@ public class ClienteService implements IClienteService {
         return cliente;
     }
 
+    @Override
+    public Cliente findById(int id){
+        Cliente cliente;
+        try {
+            cliente = iClienteRepository.findById(id);
+        }catch (Exception ex){
+            throw ex;
+        }
+        return cliente;
+    }
+
+
 }

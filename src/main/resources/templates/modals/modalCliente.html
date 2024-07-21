@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Nuevo Empleado</title>
+    <link rel="stylesheet" th:href="@{/css/formulario.css}">
+</head>
+<body>
+    <div class="modal" id="modalCliente">
+        <div class="modal-content">
+            <span class="close-button" id="close-button">&times;</span>
+            <h2>Agregar Nuevo Cliente</h2>
+            <form th:action="@{/api/cliente/guardar}" method="post" th:object="${cliente}">
+                
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa el nombre del cliente">
+
+                <label for="precio">Telefono</label>
+                <input type="number" id="telefono" th:field="*{telefono}" placeholder="Ingresa el telefono">
+
+                <label for="codigo">RUC</label>
+                <input type="text" id="dni" th:field="*{RUC}" placeholder="Ingresa el RUC del cliente">
+
+                <label for="marca">Direccion</label>
+                <input type="text" id="direccion" th:field="*{direccion}" placeholder="Ingresa la direccion">
+
+                <div class="button-group">
+                    <button type="button" class="cancel-button" id="cancel-button">Cancelar</button>
+                    <button type="submit" class="save-button">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

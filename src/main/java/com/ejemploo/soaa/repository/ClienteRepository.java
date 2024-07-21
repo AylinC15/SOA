@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -35,9 +38,9 @@ public class ClienteRepository implements IClienteRepository {
     }
 
     @Override
-    public int deletebyName(String name) {
-        String SQL = "UPDATE cliente SET estado= 0 WHERE name=?";
-        return jdbcTemplate.update(SQL, new Object[]{name});
+    public int deletebyName(String nombre) {
+        String SQL = "UPDATE cliente SET estado= 0 WHERE nombre=?";
+        return jdbcTemplate.update(SQL, new Object[]{nombre});
     }
 
     @Override
@@ -59,4 +62,22 @@ public class ClienteRepository implements IClienteRepository {
             return null;
         }
     }
+
+    @Override
+    public Cliente findById(int id) {
+        String SQL = "SELECT * FROM cliente WHERE id_cliente = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{id}, new RowMapper<Cliente>() {
+            @Override
+            public Cliente mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Cliente cliente = new Cliente();
+                cliente.setId_cliente(rs.getInt("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setTelefono(rs.getString("telefono"));
+                cliente.setRUC(rs.getString("RUC"));
+                cliente.setDireccion(rs.getString("direccion"));
+                return cliente;
+            }
+        });
+    }
+
 }

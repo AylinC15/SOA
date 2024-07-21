@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Nuevo Empleado</title>
+    <link rel="stylesheet" th:href="@{/css/formulario.css}">
+</head>
+<body>
+    <div class="modal" id="modalDevolucion">
+        <div class="modal-content">
+            <span class="close-button" id="close-button">&times;</span>
+            <h2>Agregar Nuevo Devolucion</h2>
+            <form th:action="@{/api/devolucion/guardar}" method="post" th:object="${devolucion}">
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" name="fecha" placeholder="Selecciona la fecha">
+
+                <label for="producto">Producto</label>
+                <input type="text" id="producto" th:field="*{producto}" placeholder="Ingresa el producto">
+
+                <label for="codigo">Cliente</label>
+                <input type="number" id="id_cliente" th:field="*{id_cliente}" placeholder="Ingresa el codigo del cliente">
+
+
+                <div class="button-group">
+                    <button type="button" class="cancel-button" id="cancel-button">Cancelar</button>
+                    <button type="submit" class="save-button">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
