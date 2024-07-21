@@ -1,17 +1,21 @@
 package com.ejemploo.soaa.controller;
 
 import com.ejemploo.soaa.model.Cliente;
+import com.ejemploo.soaa.model.Devolucion;
 import com.ejemploo.soaa.model.Proveedor;
 import com.ejemploo.soaa.model.ServiceResponse;
 import com.ejemploo.soaa.service.IProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/proveedor")
 @CrossOrigin("*")
 public class ProveedorController {
@@ -24,7 +28,7 @@ public class ProveedorController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/guardar")
+    /*@PostMapping("/guardar")
     public ResponseEntity<ServiceResponse> save(@RequestBody Proveedor proveedor){
 
     ServiceResponse serviceResponse = new ServiceResponse();
@@ -33,7 +37,19 @@ public class ProveedorController {
         serviceResponse.setMessage("Proveedor guardado correctamente");
     }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }*/
+
+    @PostMapping("/guardar")
+    public String save(@ModelAttribute Proveedor proveedor, Model model) {
+        int result = iProveedorService.save(proveedor);
+        if (result == 1) {
+            model.addAttribute("message", "Proveedor guardado correctamente");
+        } else {
+            model.addAttribute("message", "Error al guardar el proveedor");
+        }
+        return "redirect:/proveedor";
     }
+
 
     @PostMapping("/actualizar")
     public ResponseEntity<ServiceResponse> update(@RequestBody Proveedor proveedor){
@@ -47,7 +63,7 @@ public class ProveedorController {
     }
 
     @GetMapping("/borrar/{nombre_proveedor}")
-    public ResponseEntity<ServiceResponse> update(@PathVariable String nombre_proveedor){
+    /*public ResponseEntity<ServiceResponse> update(@PathVariable String nombre_proveedor){
 
         ServiceResponse serviceResponse = new ServiceResponse();
         int result = iProveedorService.deleteByName(nombre_proveedor);
@@ -55,6 +71,17 @@ public class ProveedorController {
             serviceResponse.setMessage("Proveedor borrado correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }*/
+
+    public String delete(@PathVariable String nombre_proveedor, RedirectAttributes redirectAttributes) {
+        ServiceResponse serviceResponse = new ServiceResponse();
+        int result = iProveedorService.deleteByName(nombre_proveedor);
+        if (result == 1) {
+            redirectAttributes.addFlashAttribute("message", "Producto borrado correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Error al borrar el producto");
+        }
+        return "redirect:/proveedor"; // Redirige a la vista de lista de productos
     }
 
 }

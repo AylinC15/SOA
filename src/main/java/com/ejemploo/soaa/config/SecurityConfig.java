@@ -20,11 +20,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
+
+    //para pruebas en postman
     /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/**","/user/**","/login","/**").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/img/**",).permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 .anyRequest().authenticated())
                 .formLogin(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable).headers(headers -> headers.frameOptions().sameOrigin());
@@ -32,10 +34,27 @@ public class SecurityConfig {
         return http.build();
     }*/
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")  // URL de tu página de inicio de sesión personalizada
+                        .loginProcessingUrl("/login")  // URL a la que se envía el formulario de inicio de sesión
+                        .defaultSuccessUrl("/home", true)  // URL a la que se redirige tras un inicio de sesión exitoso
+                        .permitAll())
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions().sameOrigin());
+
+        return http.build();
+    }*/
+
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**", "/modalCliente", "/modalProducto").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")  // URL de tu página de inicio de sesión personalizada

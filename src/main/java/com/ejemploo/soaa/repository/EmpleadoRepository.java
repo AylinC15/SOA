@@ -25,8 +25,8 @@ public class EmpleadoRepository implements IEmpleadoRepository{
 
     @Override
     public int save(Empleado empleado){
-        String SQL = "INSERT INTO empleado VALUES (?,?,?,?,?,?)";
-        return jdbcTemplate.update(SQL, new Object[]{empleado.getCodigo(), empleado.getName(), empleado.getTelefono(), empleado.getDNI(), empleado.getDireccion(), empleado.getEstado()});
+        String SQL = "INSERT INTO empleado(codigo,name,telefono,dni,direccion) VALUES (?,?,?,?,?)";
+        return jdbcTemplate.update(SQL, new Object[]{empleado.getCodigo(), empleado.getName(), empleado.getTelefono(), empleado.getDNI(), empleado.getDireccion()});
     }
 
     @Override

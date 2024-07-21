@@ -1,20 +1,19 @@
 package com.ejemploo.soaa.controller;
 
-
-
-
-
+import com.ejemploo.soaa.model.Cliente;
 import com.ejemploo.soaa.model.Devolucion;
 import com.ejemploo.soaa.model.ServiceResponse;
 import com.ejemploo.soaa.service.IDevolucionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/devolucion")
 public class DevolucionController {
     @Autowired
@@ -26,7 +25,7 @@ public class DevolucionController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/guardar")
+    /*@PostMapping("/guardar")
     public ResponseEntity<ServiceResponse> save(@RequestBody Devolucion devolucion){
 
         ServiceResponse serviceResponse = new ServiceResponse();
@@ -35,7 +34,19 @@ public class DevolucionController {
             serviceResponse.setMessage("Devolucion guardada correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }*/
+
+    @PostMapping("/guardar")
+    public String save(@ModelAttribute Devolucion devolucion, Model model) {
+        int result = iDevolucionService.save(devolucion);
+        if (result == 1) {
+            model.addAttribute("message", "Devolucion guardada correctamente");
+        } else {
+            model.addAttribute("message", "Error al guardar la devolucion");
+        }
+        return "redirect:/devoluciones";
     }
+
 
     @PostMapping("/actualizar")
     public ResponseEntity<ServiceResponse> update(@RequestBody Devolucion devolucion){

@@ -12,4 +12,5 @@ public interface IClienteRepository {
     public int deletebyName(String name);
     Cliente findByRuc(String ruc);
     Cliente findByNombreIgnoreCase(String nombre);
+    Cliente findById(int id);
 }

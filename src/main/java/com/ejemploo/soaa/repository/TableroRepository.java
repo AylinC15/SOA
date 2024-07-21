@@ -23,8 +23,8 @@ public class TableroRepository implements ITableroRepository{
 
     @Override
     public int save(Tablero tablero){
-        String SQL = "INSERT INTO tablero values (?,?,?)";
-        return jdbcTemplate.update(SQL, new Object[]{tablero.getProgreso(),tablero.getEstado(),tablero.getId_cliente()});
+        String SQL = "INSERT INTO tablero(progreso,id_cliente) values (?,?)";
+        return jdbcTemplate.update(SQL, new Object[]{tablero.getProgreso(),tablero.getId_cliente()});
     }
 
     @Override

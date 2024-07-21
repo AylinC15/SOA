@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventas Registrados</title>
+    <title>Productos Registrados</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
     <div class="container">
         <aside class="sidebar">
             <ul>
-                <li><a href="#" > <img src="img/carrito-de-compras.png" alt="Ventas Icono" class="icon"> Ventas</a></li>
-                <li><a href="#"> <img src="img/flechas-repetir.png"alt="Devoluciones Icono" class="icon"> Devoluciones</a></li>
-                <li><a th:href="@{/usuario}" > <img src="img/usuarios.png"alt="Usuarios Icono" class="icon">Usuarios</a></li>
-                <li><a href="#"> <img src="img/cubo.png"alt="Productos Icono" class="icon">Productos</a></li>
-                <li><a href="#"> <img src="img/bolsa-de-la-compra.png"alt="Empleados Icono" class="icon">Empleados</a></li>
+                <li><a th:href="@{/ventas}"> <img src="img/carrito-de-compras.png" alt="Ventas Icono" class="icon"> Ventas</a></li>
+                <li><a th:href="@{/devoluciones}"> <img src="img/flechas-repetir.png"alt="Devoluciones Icono" class="icon"> Devoluciones</a></li>
+                <li><a th:href="@{/usuario}"> <img src="img/usuarios.png"alt="Usuarios Icono" class="icon">Usuarios</a></li>
+                <li><a th:href="@{/productos}"> <img src="img/cubo.png"alt="Productos Icono" class="icon">Productos</a></li>
+                <li><a th:href="@{/empleados}"> <img src="img/bolsa-de-la-compra.png"alt="Empleados Icono" class="icon">Empleados</a></li>
                 <li><a th:href="@{/tablero}"> <img src="img/aplicaciones.png"alt="Tableros Icono" class="icon">Tableros</a></li>
                 <li><a th:href="@{/servicios}"> <img src="img/llave-inglesa-alternativa.png"alt="Servicios Icono" class="icon">Servicios</a></li>
-                <li><a th:href="@{/cliente}"> <img src="img/clientes.png"alt="Cliente Icono" class="icon">Clientes</a></li>
+                <li><a th:href="@{/clientes}"> <img src="img/clientes.png"alt="Cliente Icono" class="icon">Clientes</a></li>
                 <li><a th:href="@{/proveedor}"> <img src="img/proveedor.png"alt="Proveedor Icono" class="icon">Proveedores</a></li>
             </ul>
             <button class="logout"> <img src="img/salir-alt.png" alt="cerrar Icono" class="icon"> Cerrar sesión</button>
@@ -27,36 +27,50 @@
             <div class="top-bar">
                 <img src="img/logo.png" alt="logo" class="logo">
             </div>
-            <h1>Ventas registrados</h1>
+            <h1>Productos Registrados</h1>
+            <div class="button-wrapper">
+                <button id="open-modal-button" class="btn-add-product">
+                    <span class="icon">+</span> Añadir producto
+                </button>
+            </div>          
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Correo electrónico</th>
-                        <th>Rol</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Proveedor</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr >
-                        <td >1</td>
-                        <td >John Doe</td>
-                        <td >ROL</td>
-                        <div class="button-container">
-                            <button class="btn editar">
-                                <img src="../static/img/editar.png" alt="Editar Icono">
+                    <tr th:each="producto : ${productos}" >
+                        <td th:text="${producto.id_producto}">1</td>
+                        <td th:text="${producto.name}">John Doe</td>
+                        <td th:text="${producto.marca}">xxxxxx</td>
+                        <td th:text="${producto.cantidad}">00.00</td>
+                        <td th:text="${producto.precio}">0000</td>
+                        <td th:text="${producto.nombre_proveedor}">00.00</td>
+                        <td><div class="button-container">
+                            <button  class="btn editar" >
+                                <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>
+                            <form th:action="@{/api/almacen/borrar/{name}(name=${producto.name})}" method="get" style="display:inline;">
                             <button class="btn eliminar">
-                                <img src="../static/img/basura.png" alt="Eliminar Icono">
+                                <img src="img/basura.png" alt="Eliminar Icono">
                                 Eliminar
                             </button>
-                        </div>
+                            </form>
+                        </div></td>
                     </tr>
 
                 </tbody>
             </table>
         </main>  
     </div>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

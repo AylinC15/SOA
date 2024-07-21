@@ -11,13 +11,13 @@
         <aside class="sidebar">
             <ul>
                 <li><a href="#"> <img src="img/carrito-de-compras.png" alt="Ventas Icono" class="icon"> Ventas</a></li>
-                <li><a href="#"> <img src="img/flechas-repetir.png"alt="Devoluciones Icono" class="icon"> Devoluciones</a></li>
+                <li><a th:href="@{/devoluciones}"> <img src="img/flechas-repetir.png"alt="Devoluciones Icono" class="icon"> Devoluciones</a></li>
                 <li><a th:href="@{/usuario}"> <img src="img/usuarios.png"alt="Usuarios Icono" class="icon">Usuarios</a></li>
                 <li><a th:href="@{/productos}"> <img src="img/cubo.png"alt="Productos Icono" class="icon">Productos</a></li>
                 <li><a th:href="@{/empleados}"> <img src="img/bolsa-de-la-compra.png"alt="Empleados Icono" class="icon">Empleados</a></li>
                 <li><a th:href="@{/tablero}"> <img src="img/aplicaciones.png"alt="Tableros Icono" class="icon">Tableros</a></li>
-                <li><a href="#"> <img src="img/llave-inglesa-alternativa.png"alt="Servicios Icono" class="icon">Servicios</a></li>
-                <li><a href="#"> <img src="img/clientes.png"alt="Cliente Icono" class="icon">Clientes</a></li>
+                <li><a th:href="@{/servicio}"> <img src="img/llave-inglesa-alternativa.png"alt="Servicios Icono" class="icon">Servicios</a></li>
+                <li><a th:href="@{/clientes}"> <img src="img/clientes.png"alt="Cliente Icono" class="icon">Clientes</a></li>
                 <li><a th:href="@{/proveedor}"> <img src="img/proveedor.png"alt="Proveedor Icono" class="icon">Proveedores</a></li>
             </ul>
             <button class="logout"> <img src="img/salir-alt.png" alt="cerrar Icono" class="icon"> Cerrar sesión</button>
@@ -28,6 +28,11 @@
                 <img src="img/logo.png" alt="logo" class="logo">
             </div>
             <h1>Clientes registrados</h1>
+            <div class="button-wrapper">
+                <button id="open-modalCliente-button" class="btn-add-product">
+                    <span class="icon">+</span> Añadir cliente
+                </button>
+            </div> 
             <table>
                 <thead>
                     <tr>
@@ -48,21 +53,24 @@
                         <td th:text="${cliente.direccion}">111111</td>
                         <td>
                         <div class="button-container">
-                            <button id="open-modal-button" class="btn editar" >
+                            <button class="btn editar" >
                                 <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>
-                            <button class="btn eliminar">
+                            <form th:action="@{/api/cliente/borrar/{nombre}(nombre=${cliente.nombre})}" method="get">
+                                <button class="btn eliminar">
                                 <img src="img/basura.png" alt="Eliminar Icono">
                                 Eliminar
-                            </button>
-                        </div></td>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
                     </tr>
 
                 </tbody>
             </table>
         </main>  
     </div>
-    <script th:src="@{/js/script.js}"></script>
+    <script th:src="@{/js/scriptC.js}"></script>
 </body>
 </html>
