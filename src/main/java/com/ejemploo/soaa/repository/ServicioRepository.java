@@ -18,20 +18,20 @@ public class ServicioRepository implements IServicioRepository{
 
     @Override
     public List<Servicio> findAll(){
-        String SQL = "SELECT s.id_servicio,s.tipo_servicio, s.descripcion, e.name FROM servicio s INNER JOIN empleado e on s.id_empleado = e.id_empleado WHERE s.estado = 1";
+        String SQL = "SELECT s.id_servicio,s.tipo_servicio, s.descripcion, s.precio, e.name FROM servicio s INNER JOIN empleado e on s.id_empleado = e.id_empleado WHERE s.estado = 1";
         return jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(Servicio.class));
     }
 
     @Override
     public int save(Servicio servicio){
-        String SQL = "INSERT INTO servicio (tipo_servicio, descripcion, id_empleado) VALUES (?,?,?)";
-        return jdbcTemplate.update(SQL, new Object[]{servicio.getTipo_servicio(),servicio.getDescripcion(),servicio.getId_empleado()});
+        String SQL = "INSERT INTO servicio (tipo_servicio, descripcion,precio, id_empleado ) VALUES (?,?,?,?)";
+        return jdbcTemplate.update(SQL, new Object[]{servicio.getTipo_servicio(),servicio.getDescripcion(),servicio.getPrecio(),servicio.getId_empleado()});
     }
 
     @Override
     public int update(Servicio servicio){
-        String SQL = "UPDATE servicio SET tipo_servicio=?, descripcion=?, id_empleado=? WHERE id_servicio=?";
-        return jdbcTemplate.update(SQL, new Object[]{servicio.getTipo_servicio(),servicio.getDescripcion(),servicio.getId_empleado(),servicio.getId_servicio()});
+        String SQL = "UPDATE servicio SET tipo_servicio=?, descripcion=?, precio=?, id_empleado=? WHERE id_servicio=?";
+        return jdbcTemplate.update(SQL, new Object[]{servicio.getTipo_servicio(),servicio.getDescripcion(),servicio.getPrecio(),servicio.getId_empleado(),servicio.getId_servicio()});
     }
 
     @Override

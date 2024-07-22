@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/servicio")
 public class ServicioController {
     @Autowired
@@ -103,7 +103,7 @@ public class ServicioController {
     }
 
 
-    @PostMapping("/cotizacion/{id_empleado}")
+    @GetMapping("/cotizacion/{id_empleado}")
     public ResponseEntity<ByteArrayResource> generateCotizacion(@PathVariable int id_empleado) {
         List<Servicio> servicios = iServicioService.findByEmpleadoId(id_empleado);
         if (servicios.isEmpty()) {
