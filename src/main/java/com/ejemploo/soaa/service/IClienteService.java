@@ -14,4 +14,8 @@ public interface IClienteService {
     Cliente findByRuc(String ruc);
     Cliente findByNombreIgnoreCase(String nombre);
     Cliente findById(int id_cliente);
+
+        List<Cliente> findByRucContaining(String ruc);
+        List<Cliente> findByNombreIgnoreCaseContaining(String nombre);
+
 }

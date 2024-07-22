@@ -10,4 +10,6 @@ public interface IProveedorService {
     public int deleteByName(String nombre_proveedor);
     Proveedor findByNombreIgnoreCase(String nombre_proveedor);
     Proveedor findById(int id_proveedor);
+    List<Proveedor> findByNombreIgnoreCaseContaining(String nombre_proveedor);
+
 }

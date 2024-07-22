@@ -1,4 +1,3 @@
-// Función para abrir el modal (para agregar o editar)
 function openModal(id = null) {
     let url = id ? `/modalCliente/${id}` : '/modalCliente';
     
@@ -12,11 +11,9 @@ function openModal(id = null) {
             const modal = document.getElementById('modalCliente');
             modal.style.display = 'block';
 
-            // Configurar el título del modal
             const modalTitle = modal.querySelector('#modalTitle');
             modalTitle.textContent = id ? 'Editar Cliente' : 'Agregar Nuevo Cliente';
 
-            // Configurar la acción del formulario y el ID si es necesario
             const form = modal.querySelector('form');
             if (id) {
                 form.action = '/api/cliente/actualizar';
@@ -28,7 +25,6 @@ function openModal(id = null) {
                 form.action = '/api/cliente/guardar';
             }
 
-            // Configurar eventos de cierre
             document.getElementById('close-button').addEventListener('click', closeModal);
             document.getElementById('cancel-button').addEventListener('click', closeModal);
 
@@ -40,7 +36,6 @@ function openModal(id = null) {
         });
 }
 
-// Función para cerrar el modal
 function closeModal() {
     const modal = document.getElementById('modalCliente');
     if (modal) {
@@ -48,14 +43,77 @@ function closeModal() {
     }
 }
 
-// Event listener para abrir el modal de agregar
-document.getElementById('open-modalCliente-button').addEventListener('click', () => openModal());
+function buscarCliente() {
+    const searchTerm = document.getElementById('searchTerm').value;
+    const searchType = document.getElementById('searchType').value;
+    const tableBody = document.querySelector('table tbody');
 
-// Event listener para abrir el modal de editar
-document.querySelectorAll('.editar').forEach(button => {
-    button.addEventListener('click', function() {
-        const id = this.getAttribute('data-id');
-        openModal(id);
+    fetch(`/api/cliente/buscarCliente?termino=${encodeURIComponent(searchTerm)}&tipo=${searchType}`)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) });
+            }
+            return response.json();
+        })
+        .then(clientes => {
+            if (!Array.isArray(clientes)) {
+                throw new Error('El resultado de la búsqueda debe ser una lista de clientes.');
+            }
+
+            tableBody.innerHTML = clientes.map(cliente => `
+                <tr>
+                    <td>${cliente.id_cliente}</td>
+                    <td>${cliente.nombre}</td>
+                    <td>${cliente.telefono}</td>
+                    <td>${cliente.ruc}</td>
+                    <td>${cliente.direccion}</td>
+                    <td>
+                        <div class="button-container">
+                            <button class="btn editar" data-id="${cliente.id_cliente}">
+                                <img src="img/editar.png" alt="Editar Icono">
+                                Editar
+                            </button>
+                            <form action="/api/cliente/borrar/${cliente.nombre}" method="get">
+                                <button class="btn eliminar">
+                                    <img src="img/basura.png" alt="Eliminar Icono">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            document.querySelectorAll('.editar').forEach(button => {
+                button.addEventListener('click', function() {
+                    openModal(this.getAttribute('data-id'));
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="6">${error.message}</td>
+                </tr>
+            `;
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('open-modalCliente-button').addEventListener('click', () => openModal());
+
+    document.querySelectorAll('.editar').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            openModal(id);
+        });
     });
-});
 
+    const searchTermInput = document.getElementById('searchTerm');
+    searchTermInput.addEventListener('input', buscarCliente);
+
+    const searchButton = document.getElementById('searchButton');
+    if (searchButton) {
+        searchButton.addEventListener('click', buscarCliente);
+    }
+});

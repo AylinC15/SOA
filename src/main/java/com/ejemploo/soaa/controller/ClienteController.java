@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -107,24 +108,37 @@ public class ClienteController {
     }
 
 
-        @GetMapping("/buscarPorRuc/{ruc}")
-    public ResponseEntity<Cliente> obtenerClientePorRuc(@PathVariable String ruc) {
-        Cliente cliente = iClienteService.findByRuc(ruc);
-        if (cliente != null) {
-            return new ResponseEntity<>(cliente, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/buscarCliente")
+    public ResponseEntity<?> buscarCliente(@RequestParam String termino, @RequestParam String tipo) {
+        System.out.println("Búsqueda - Término: " + termino + ", Tipo: " + tipo);
+
+        List<Cliente> clientes = new ArrayList<>();
+
+        try {
+            if ("ruc".equalsIgnoreCase(tipo)) {
+                System.out.println("Buscando por RUC: " + termino);
+                clientes = iClienteService.findByRucContaining(termino);
+            } else if ("nombre".equalsIgnoreCase(tipo)) {
+                System.out.println("Buscando por nombre: " + termino);
+                clientes = iClienteService.findByNombreIgnoreCaseContaining(termino);
+            } else {
+                System.out.println("Tipo de búsqueda no válido: " + tipo);
+                return new ResponseEntity<>("Tipo de búsqueda no válido", HttpStatus.BAD_REQUEST);
+            }
+
+            if (!clientes.isEmpty()) {
+                System.out.println("Clientes encontrados: " + clientes.size());
+                return new ResponseEntity<>(clientes, HttpStatus.OK);
+            } else {
+                System.out.println("Cliente no encontrado para el término: " + termino + " y tipo: " + tipo);
+                return new ResponseEntity<>("Cliente no encontrado", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            System.err.println("Error en la búsqueda: " + e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>("Error en la búsqueda: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/buscarPorNombre/{name}")
-    public ResponseEntity<Cliente> obtenerClientePorNombre(@PathVariable String name) {
-        Cliente cliente = iClienteService.findByNombreIgnoreCase(name);
-        if (cliente != null) {
-            return new ResponseEntity<>(cliente, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 
 }

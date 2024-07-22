@@ -32,6 +32,14 @@
                 <button id="open-modalCliente-button" class="btn-add-product">
                     <span class="icon">+</span> Añadir cliente
                 </button>
+                <div class="search-wrapper">
+                    <input type="text" id="searchTerm" placeholder="Buscar cliente...">
+                    <select id="searchType">
+                        <option value="ruc">RUC</option>
+                        <option value="nombre">Nombre</option>
+                    </select>
+                    <button id="searchButton">Buscar</button>
+                </div>
             </div> 
             <table>
                 <thead>
@@ -45,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="cliente : ${clientes}" >
+                    <tr th:each="cliente : ${clientes}">
                         <td th:text="${cliente.id_cliente}">1</td>
                         <td th:text="${cliente.nombre}">John Doe</td>
                         <td th:text="${cliente.telefono}">1111111</td>
@@ -66,7 +74,6 @@
                         </div>
                     </td>
                     </tr>
-
                 </tbody>
             </table>
         </main>  
