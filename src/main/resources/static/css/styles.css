@@ -190,6 +190,12 @@ tbody tr:nth-child(even) {
     width: 100%;
 }
 
+.button-wrapper {
+    display: flex;
+    gap: 10px; /* Ajusta el valor según el espaciado deseado */
+}
+
+
 .btn {
     display: flex;
     align-items: center;

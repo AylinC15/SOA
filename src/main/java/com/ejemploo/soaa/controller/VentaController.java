@@ -1,4 +1,5 @@
 package com.ejemploo.soaa.controller;
+import com.ejemploo.soaa.model.Tablero;
 import com.ejemploo.soaa.model.Venta;
 import com.ejemploo.soaa.repository.VentaService;
 import com.itextpdf.kernel.colors.ColorConstants;
@@ -20,7 +21,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -30,19 +33,59 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 @Controller
-@RequestMapping("/venta")
+@RequestMapping("/api/venta")
 public class VentaController {
     @Autowired
     private VentaService ventaService;
 
-    @PostMapping
+    /*@PostMapping
     public void save(@RequestBody Venta venta) {
         ventaService.save(venta);
-    }
+    }*/
 
     @GetMapping
     public List<Venta> findAll() {
         return ventaService.findAll();
+    }
+
+    @PostMapping("/guardar")
+    public String save(@ModelAttribute Venta venta, Model model) {
+        int result = ventaService.save(venta);
+        if (result == 1) {
+            model.addAttribute("message", "Cliente guardado correctamente");
+        } else {
+            model.addAttribute("message", "Error al guardar el cliente");
+        }
+        return "redirect:/ventas";
+    }
+
+    @PostMapping("/actualizar")
+    public String actualizar(@ModelAttribute Venta venta, RedirectAttributes redirectAttributes) {
+        System.out.println("ID recibido en el controlador: " + venta.getId_venta());
+
+        if (venta.getId_venta() == 0) {
+            redirectAttributes.addFlashAttribute("error", "ID de devolución no válido");
+            return "redirect:/ventas";
+        }
+
+        int result = ventaService.update(venta);
+        if (result > 0) {
+            redirectAttributes.addFlashAttribute("mensaje", "Devolución actualizada correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "No se pudo actualizar la devolución");
+        }
+        return "redirect:/ventas";
+    }
+
+    @GetMapping("/borrar/{id_venta}")
+    public String delete(@PathVariable int id_venta, RedirectAttributes redirectAttributes) {
+        int result =ventaService.deleteById(id_venta);
+        if (result == 1) {
+            redirectAttributes.addFlashAttribute("message", "Cliente borrado correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Error al borrar el cliente");
+        }
+        return "redirect:/ventas"; // Redirige a la vista de lista de clientes
     }
 
     /*

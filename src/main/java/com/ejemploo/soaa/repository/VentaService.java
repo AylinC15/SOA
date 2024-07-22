@@ -1,6 +1,7 @@
 package com.ejemploo.soaa.repository;
 
 import com.ejemploo.soaa.model.Producto;
+import com.ejemploo.soaa.model.Servicio;
 import com.ejemploo.soaa.model.Venta;
 
 import com.ejemploo.soaa.service.IVentaService;
@@ -93,6 +94,18 @@ public class VentaService implements IVentaService {
             throw e;
         }
     }
+
+    @Override
+    public Venta findByIdE(int id_servicio){
+        Venta venta;
+        try {
+            venta= iVentaRepository.findByIdE(id_servicio);
+        }catch (Exception ex){
+            throw ex;
+        }
+        return venta;
+    }
+
 }
 
 

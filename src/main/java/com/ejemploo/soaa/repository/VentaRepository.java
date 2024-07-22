@@ -1,9 +1,12 @@
 package com.ejemploo.soaa.repository;
 
 import com.ejemploo.soaa.model.Producto;
+import com.ejemploo.soaa.model.Servicio;
 import com.ejemploo.soaa.model.Venta;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -40,6 +43,26 @@ public class VentaRepository implements IVentaRepository {
         return jdbcTemplate.update(sql, id_venta);
     }
 
+    @Override
+    public Venta findByIdE(int id_venta) {
+        String sql = "SELECT * FROM venta WHERE id_venta = ?";
+        return jdbcTemplate.query(sql, new Object[]{id_venta}, new ResultSetExtractor<Venta>() {
+            @Override
+            public Venta extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if (rs.next()) {
+                    Venta venta = new Venta();
+                    venta.setId_venta(rs.getInt("id_venta"));
+                    venta.setFecha(rs.getString("fecha"));
+                    venta.setCantidad_venta(rs.getInt("cantidad_venta"));
+                    venta.setTotal_pagar(rs.getBigDecimal("total_pagar"));
+                    venta.setId_producto(rs.getInt("id_producto"));
+                    return venta;
+                }
+                return null;
+            }
+        });
+    }
+
     public Optional<Venta> findById(int id_venta) {
         String sql = "SELECT v.id_venta, v.fecha, v.cantidad_venta, v.total_pagar, c.nombre AS cliente_nombre, c.ruc, e.name AS empleado_nombre, p.name AS producto_nombre, p.id_producto FROM venta v INNER JOIN cliente c ON v.id_cliente = c.id_cliente INNER JOIN empleado e ON v.id_empleado = e.id_empleado INNER JOIN producto p ON v.id_producto = p.id_producto WHERE v.id_venta = ?";
         List<Venta> ventas = jdbcTemplate.query(sql, new Object[]{id_venta}, (rs, rowNum) -> mapRowToVenta(rs));
@@ -58,7 +81,7 @@ public class VentaRepository implements IVentaRepository {
     private Venta mapRowToVenta(ResultSet rs) throws SQLException {
         Venta venta = new Venta();
         venta.setId_venta(rs.getInt("id_venta"));
-        venta.setFecha(rs.getDate("fecha"));
+        venta.setFecha(rs.getString("fecha"));
         venta.setCantidad_venta(rs.getInt("cantidad_venta"));
         venta.setTotal_pagar(rs.getBigDecimal("total_pagar"));
         venta.setId_producto(rs.getInt("id_producto"));

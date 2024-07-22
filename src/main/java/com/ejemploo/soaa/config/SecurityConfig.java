@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")  // URL de tu página de inicio de sesión personalizada
                         .loginProcessingUrl("/login")  // URL a la que se envía el formulario de inicio de sesión
-                        .defaultSuccessUrl("/home", true)  // URL a la que se redirige tras un inicio de sesión exitoso
+                        .defaultSuccessUrl("/ventas", true)  // URL a la que se redirige tras un inicio de sesión exitoso
                         .permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions().sameOrigin());

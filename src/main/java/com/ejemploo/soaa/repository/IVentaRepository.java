@@ -10,4 +10,5 @@ public interface IVentaRepository {
     public int deleteById(int id);
     Optional<Venta> findById(int id_venta);
     List<Venta> findByEmpleadoId(int idEmpleado);
+    Venta findByIdE(int id_venta);
 }

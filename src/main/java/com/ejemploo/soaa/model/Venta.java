@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class Venta {
     int id_venta;
-    Date fecha;
+    String fecha;
     int cantidad_venta;
     BigDecimal total_pagar;
     int estado;
