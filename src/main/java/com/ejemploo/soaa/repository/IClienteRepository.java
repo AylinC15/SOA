@@ -13,4 +13,6 @@ public interface IClienteRepository {
     Cliente findByRuc(String ruc);
     Cliente findByNombreIgnoreCase(String nombre);
     Cliente findById(int id);
+    List<Cliente> findByRucContaining(String ruc);
+    List<Cliente> findByNombreIgnoreCaseContaining(String nombre);
 }

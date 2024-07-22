@@ -94,5 +94,27 @@ public class ClienteService implements IClienteService {
         return cliente;
     }
 
+    @Override
+    public List<Cliente> findByRucContaining(String ruc) {
+        List<Cliente> clientes;
+        try {
+            clientes = iClienteRepository.findByRucContaining(ruc);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return clientes;
+    }
+
+    @Override
+    public List<Cliente> findByNombreIgnoreCaseContaining(String nombre) {
+        List<Cliente> clientes;
+        try {
+            clientes = iClienteRepository.findByNombreIgnoreCaseContaining(nombre);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return clientes;
+    }
+
 
 }

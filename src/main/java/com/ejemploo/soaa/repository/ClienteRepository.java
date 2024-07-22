@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -57,10 +58,10 @@ public class ClienteRepository implements IClienteRepository {
     }
 
     @Override
-    public Cliente findByNombreIgnoreCase(String name) {
+    public Cliente findByNombreIgnoreCase(String nombre) {
         try {
-            String SQL = "SELECT * FROM cliente WHERE UPPER(name) = UPPER(?)";
-            return jdbcTemplate.queryForObject(SQL, BeanPropertyRowMapper.newInstance(Cliente.class), name);
+            String SQL = "SELECT * FROM cliente WHERE LOWER(nombre) = LOWER(?)";
+            return jdbcTemplate.queryForObject(SQL, BeanPropertyRowMapper.newInstance(Cliente.class), nombre);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -85,5 +86,26 @@ public class ClienteRepository implements IClienteRepository {
             }
         });
     }
+
+    @Override
+    public List<Cliente> findByRucContaining(String ruc) {
+        try {
+            String SQL = "SELECT * FROM cliente WHERE RUC LIKE ?";
+            return jdbcTemplate.query(SQL, new Object[]{"%" + ruc + "%"}, new BeanPropertyRowMapper<>(Cliente.class));
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<Cliente> findByNombreIgnoreCaseContaining(String nombre) {
+        try {
+            String SQL = "SELECT * FROM cliente WHERE LOWER(nombre) LIKE LOWER(?)";
+            return jdbcTemplate.query(SQL, new Object[]{"%" + nombre + "%"}, new BeanPropertyRowMapper<>(Cliente.class));
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
+
 
 }
