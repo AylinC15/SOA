@@ -33,7 +33,7 @@ public class PagController {
 
     @GetMapping("/modal/{id}")
     public String getModalProdcutoEdit(@PathVariable Long id, Model model) {
-        Producto producto= iAlmacenService.findById(Math.toIntExact(id));
+        Producto producto= iAlmacenService.findByIdProducto(Math.toIntExact(id));
         model.addAttribute("producto", producto);
         return "modal";
     }

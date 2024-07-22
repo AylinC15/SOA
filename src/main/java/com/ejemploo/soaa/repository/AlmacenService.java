@@ -63,10 +63,10 @@ public class AlmacenService implements IAlmacenService {
     }
 
     @Override
-    public Producto findById(int id_producto){
+    public Producto findByIdProducto(int id_producto){
         Producto producto;
         try {
-            producto = iAlmacenRepository.findById(id_producto);
+            producto = iAlmacenRepository.findByIdProducto(id_producto);
         }catch (Exception ex){
             throw ex;
         }
