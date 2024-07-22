@@ -54,7 +54,7 @@
                         <td th:text="${producto.precio}">0000</td>
                         <td th:text="${producto.nombre_proveedor}">00.00</td>
                         <td><div class="button-container">
-                            <button  class="btn editar" >
+                            <button  class="btn editar" th:data-id="${producto.id_producto}">
                                 <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>

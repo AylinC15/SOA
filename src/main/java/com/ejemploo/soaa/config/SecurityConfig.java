@@ -34,7 +34,7 @@ public class SecurityConfig {
         return http.build();
     }*/
 
-    /*@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**").permitAll()
@@ -48,10 +48,10 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions().sameOrigin());
 
         return http.build();
-    }*/
+    }
 
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**", "/modalCliente", "/modalProducto").permitAll()
@@ -65,7 +65,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions().sameOrigin());
 
         return http.build();
-    }
+    }*/
 
     @Bean
     public UserDetailsService userDetailsService(){

@@ -12,4 +12,5 @@ public interface IEmpleadoService {
     public int deleteByNameEmpleado (String name);
     Empleado findByDni(String dni);
     Empleado findByNombreIgnoreCase(String nombre);
+    Empleado findById(int id_empleado);
 }

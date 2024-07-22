@@ -51,14 +51,14 @@
                         <td th:text="${devolucion.nombre}">00.00</td>
                         <td>
                         <div class="button-container">
-                            <button  class="btn editar" >
+                            <button  class="btn editar" th:data-id="${devolucion.id_devolucion}" >
                                 <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>
-                            <button class="btn eliminar">
+                            <form th:action="@{/api/devolucion/borrar/{id_devolucion}(id_devolucion=${devolucion.id_devolucion})}" method="get"><button class="btn eliminar">
                                 <img src="img/basura.png" alt="Eliminar Icono">
                                 Eliminar
-                            </button>
+                            </button></form>
                         </div></td>
                     </tr>
 

@@ -1,6 +1,7 @@
 package com.ejemploo.soaa.repository;
 
 import com.ejemploo.soaa.model.Cliente;
+import com.ejemploo.soaa.model.Devolucion;
 import com.ejemploo.soaa.model.Empleado;
 import com.ejemploo.soaa.service.IEmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,4 +79,15 @@ public class EmpleadoService implements IEmpleadoService {
         }
         return empleado;
     }
+
+    @Override
+    public Empleado findById(int id_empleado) {
+        Empleado empleado = iEmpleadoRepository.findById(id_empleado);
+        if (empleado == null) {
+            throw new RuntimeException("Devolución no encontrada con id: " + id_empleado);
+        }
+        return empleado;
+    }
+
+
 }

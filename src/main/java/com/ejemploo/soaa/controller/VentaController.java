@@ -19,6 +19,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
@@ -28,7 +29,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
-@RestController
+@Controller
 @RequestMapping("/venta")
 public class VentaController {
     @Autowired

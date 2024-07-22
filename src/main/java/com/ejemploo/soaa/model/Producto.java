@@ -2,6 +2,8 @@ package com.ejemploo.soaa.model;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class Producto {
 
@@ -9,7 +11,7 @@ public class Producto {
     String name;
     String marca;
     int cantidad;
-    double precio;
+    BigDecimal precio;
     int estado;
 
     int id_proveedor;

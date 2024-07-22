@@ -84,10 +84,10 @@ public class ClienteService implements IClienteService {
     }
 
     @Override
-    public Cliente findById(int id){
+    public Cliente findById(int id_cliente){
         Cliente cliente;
         try {
-            cliente = iClienteRepository.findById(id);
+            cliente = iClienteRepository.findById(id_cliente);
         }catch (Exception ex){
             throw ex;
         }

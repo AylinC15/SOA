@@ -3,10 +3,15 @@ package com.ejemploo.soaa.repository;
 
 import com.ejemploo.soaa.model.Devolucion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 @Repository
 public class DevolucionRepository implements  IDevolucionRepository{
@@ -37,4 +42,24 @@ public class DevolucionRepository implements  IDevolucionRepository{
         String SQL="UPDATE devolucion SET estado = 0 WHERE id_devolucion =?";
         return jdbcTemplate.update(SQL, new Object[]{id_devolucion});
     }
+
+    @Override
+    public Devolucion findById(int id_devolucion) {
+        String sql = "SELECT * FROM devolucion WHERE id_devolucion = ?";
+        return jdbcTemplate.query(sql, new Object[]{id_devolucion}, new ResultSetExtractor<Devolucion>() {
+            @Override
+            public Devolucion extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if (rs.next()) {
+                    Devolucion devolucion = new Devolucion();
+                    devolucion.setId_devolucion(rs.getInt("id_devolucion"));
+                    devolucion.setFecha(String.valueOf(rs.getDate("fecha")));
+                    devolucion.setProducto(rs.getString("producto"));
+                    devolucion.setId_cliente(rs.getInt("id_cliente"));
+                    return devolucion;
+                }
+                return null;
+            }
+        });
+    }
+
 }

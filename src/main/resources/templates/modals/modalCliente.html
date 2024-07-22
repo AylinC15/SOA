@@ -10,8 +10,10 @@
     <div class="modal" id="modalCliente">
         <div class="modal-content">
             <span class="close-button" id="close-button">&times;</span>
-            <h2>Agregar Nuevo Cliente</h2>
-            <form th:action="@{/api/cliente/guardar}" method="post" th:object="${cliente}">
+            <h2 id="modalTitle">Gestionar Cliente</h2>
+            <form th:action="${cliente.id_cliente == null || cliente.id_cliente == 0} ? @{/api/cliente/guardar} : @{/api/cliente/actualizar}" 
+            th:object="${cliente}" method="post">
+                <input type="hidden" th:field="*{id_cliente}">
                 
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingresa el nombre del cliente">
@@ -25,6 +27,7 @@
                 <label for="marca">Direccion</label>
                 <input type="text" id="direccion" th:field="*{direccion}" placeholder="Ingresa la direccion">
 
+                <input type="hidden" th:field="*{estado}" value="1" />
                 <div class="button-group">
                     <button type="button" class="cancel-button" id="cancel-button">Cancelar</button>
                     <button type="submit" class="save-button">Guardar</button>

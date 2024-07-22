@@ -1,6 +1,7 @@
 package com.ejemploo.soaa.controller;
 
 import com.ejemploo.soaa.model.Cliente;
+import com.ejemploo.soaa.model.Devolucion;
 import com.ejemploo.soaa.model.Producto;
 import com.ejemploo.soaa.model.ServiceResponse;
 import com.ejemploo.soaa.service.IClienteService;
@@ -38,7 +39,7 @@ public class ClienteController {
         if (result == 1){
             serviceResponse.setMessage("Cliente guardado correctamente");
         }
-        return "redirect:/productos";
+        return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }*/
 
     @PostMapping("/guardar")
@@ -52,18 +53,6 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
-    @PostMapping("/actualizar")
-    public String update(@ModelAttribute Cliente cliente, Model model) {
-        int result = iClienteService.update(cliente);
-        if (result == 1) {
-            model.addAttribute("message", "Cliente actualizado correctamente");
-        } else {
-            model.addAttribute("message", "Error al actualizar el cliente");
-        }
-        return "redirect:/clientes";
-    }
-
-
     /*
     @PostMapping("/actualizar")
     public ResponseEntity<ServiceResponse> update(@RequestBody Cliente cliente){
@@ -75,6 +64,25 @@ public class ClienteController {
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }*/
+
+    @PostMapping("/actualizar")
+    public String actualizar(@ModelAttribute Cliente cliente, RedirectAttributes redirectAttributes) {
+        System.out.println("ID recibido en el controlador: " + cliente.getId_cliente());
+
+        if (cliente.getId_cliente() == 0) {
+            redirectAttributes.addFlashAttribute("error", "ID de devolución no válido");
+            return "redirect:/clientes";
+        }
+
+        int result = iClienteService.update(cliente);
+        if (result > 0) {
+            redirectAttributes.addFlashAttribute("mensaje", "Devolución actualizada correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "No se pudo actualizar la devolución");
+        }
+        return "redirect:/clientes";
+    }
+
     /*
     @GetMapping("/borrar/{name}")
     public ResponseEntity<ServiceResponse> update(@PathVariable String name){

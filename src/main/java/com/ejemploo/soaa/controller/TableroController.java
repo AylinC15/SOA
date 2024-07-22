@@ -1,5 +1,6 @@
 package com.ejemploo.soaa.controller;
 
+import com.ejemploo.soaa.model.Cliente;
 import com.ejemploo.soaa.model.Empleado;
 import com.ejemploo.soaa.model.ServiceResponse;
 import com.ejemploo.soaa.model.Tablero;
@@ -55,7 +56,7 @@ public class TableroController {
         return "redirect:/tablero";
     }
 
-    @PostMapping("/actualizar")
+    /*@PostMapping("/actualizar")
     public  ResponseEntity<ServiceResponse> update(@RequestBody Tablero tablero){
         ServiceResponse serviceResponse = new ServiceResponse();
         int result = iTableroService.update(tablero);
@@ -64,6 +65,24 @@ public class TableroController {
 
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }*/
+
+    @PostMapping("/actualizar")
+    public String actualizar(@ModelAttribute Tablero tablero, RedirectAttributes redirectAttributes) {
+        System.out.println("ID recibido en el controlador: " + tablero.getId_tablero());
+
+        if (tablero.getId_tablero() == 0) {
+            redirectAttributes.addFlashAttribute("error", "ID de devolución no válido");
+            return "redirect:/tablero";
+        }
+
+        int result = iTableroService.update(tablero);
+        if (result > 0) {
+            redirectAttributes.addFlashAttribute("mensaje", "Devolución actualizada correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "No se pudo actualizar la devolución");
+        }
+        return "redirect:/tablero";
     }
 
     @GetMapping("/borrar/{id_tablero}")

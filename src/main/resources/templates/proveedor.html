@@ -49,7 +49,7 @@
                         <td th:text="${proveedor.telefono}">TELEFONO</td>
                         <td>
                         <div class="button-container">
-                            <button  class="btn editar" >
+                            <button  class="btn editar" th:data-id="${proveedor.id_proveedor}">
                                 <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>

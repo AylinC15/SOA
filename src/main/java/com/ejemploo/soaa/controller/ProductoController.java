@@ -1,6 +1,7 @@
 package com.ejemploo.soaa.controller;
 
 
+import com.ejemploo.soaa.model.Cliente;
 import com.ejemploo.soaa.model.Producto;
 import com.ejemploo.soaa.model.ServiceResponse;
 import com.ejemploo.soaa.service.IAlmacenService;
@@ -52,7 +53,7 @@ public class ProductoController {
 
 
 
-    @PostMapping("/actualizar")
+    /*@PostMapping("/actualizar")
     public ResponseEntity<ServiceResponse> update(@RequestBody Producto producto){
 
         ServiceResponse serviceResponse = new ServiceResponse();
@@ -61,6 +62,24 @@ public class ProductoController {
             serviceResponse.setMessage("Producto actualizado correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }*/
+
+    @PostMapping("/actualizar")
+    public String actualizar(@ModelAttribute Producto producto, RedirectAttributes redirectAttributes) {
+        System.out.println("ID recibido en el controlador: " + producto.getId_producto());
+
+        if (producto.getId_producto() == 0) {
+            redirectAttributes.addFlashAttribute("error", "ID de devolución no válido");
+            return "redirect:/productos";
+        }
+
+        int result = iAlmacenService.update(producto);
+        if (result > 0) {
+            redirectAttributes.addFlashAttribute("mensaje", "Devolución actualizada correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "No se pudo actualizar la devolución");
+        }
+        return "redirect:/productos";
     }
 
     /*@GetMapping("/borrar/{name}")

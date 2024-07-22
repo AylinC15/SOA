@@ -29,36 +29,38 @@
             </div>
             <h1>Productos Registrados</h1>
             <div class="button-wrapper">
-                <button id="open-modal-button" class="btn-add-product">
-                    <span class="icon">+</span> Añadir producto
+                <button id="open-modalVenta-button" class="btn-add-product">
+                    <span class="icon">+</span> Añadir Venta
                 </button>
             </div>          
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Marca</th>
-                        <th>Precio</th>
+                        <th>Fecha</th>
                         <th>Cantidad</th>
-                        <th>Proveedor</th>
+                        <th>Precio</th>
+                        <th>Cliente</th>
+                        <th>Empleado a Cargo</th>
+                        <th>Productos</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="producto : ${productos}" >
-                        <td th:text="${producto.id_producto}">1</td>
-                        <td th:text="${producto.name}">John Doe</td>
-                        <td th:text="${producto.marca}">xxxxxx</td>
-                        <td th:text="${producto.cantidad}">00.00</td>
-                        <td th:text="${producto.precio}">0000</td>
-                        <td th:text="${producto.nombre_proveedor}">00.00</td>
+                    <tr th:each="venta : ${ventas}" >
+                        <td th:text="${venta.id_venta}">1</td>
+                        <td th:text="${venta.fecha}">John Doe</td>
+                        <td th:text="${venta.cantidad_venta}">xxxxxx</td>
+                        <td th:text="${venta.total_pagar}">00.00</td>
+                        <td th:text="${venta.id_cliente}">0000</td>
+                        <td th:text="${venta.id_empleado}">00.00</td>
+                        <td th:text="${venta.id_producto}">00.00</td>
                         <td><div class="button-container">
                             <button  class="btn editar" >
                                 <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>
-                            <form th:action="@{/api/almacen/borrar/{name}(name=${producto.name})}" method="get" style="display:inline;">
+                            <form th:action="@{/api/venta/borrar/{name}(name=${producto.name})}" method="get" style="display:inline;">
                             <button class="btn eliminar">
                                 <img src="img/basura.png" alt="Eliminar Icono">
                                 Eliminar
@@ -71,6 +73,6 @@
             </table>
         </main>  
     </div>
-    <script th:src="@{/js/script.js}"></script>
+    <script th:src="@{/js/scriptV.js}"></script>
 </body>
 </html>

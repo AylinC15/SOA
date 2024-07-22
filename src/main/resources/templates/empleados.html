@@ -55,7 +55,7 @@
                         <td th:text="${empleado.direccion}">xxxxxx</td>
                         <td>
                         <div class="button-container">
-                            <button class="btn editar" >
+                            <button class="btn editar" th:data-id="${empleado.id_empleado}">
                                 <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>

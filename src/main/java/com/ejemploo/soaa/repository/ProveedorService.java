@@ -1,4 +1,5 @@
 package com.ejemploo.soaa.repository;
+import com.ejemploo.soaa.model.Producto;
 import com.ejemploo.soaa.model.Proveedor;
 import com.ejemploo.soaa.service.IProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,17 @@ public class ProveedorService implements IProveedorService {
         try {
             proveedor = iProveedorRepository.findByNombreIgnoreCase(nombre_proveedor);
         } catch (Exception ex){
+            throw ex;
+        }
+        return proveedor;
+    }
+
+    @Override
+    public Proveedor findById(int id_proveedor){
+        Proveedor proveedor;
+        try {
+            proveedor = iProveedorRepository.findById(id_proveedor);
+        }catch (Exception ex){
             throw ex;
         }
         return proveedor;

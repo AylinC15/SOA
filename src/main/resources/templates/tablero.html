@@ -49,8 +49,8 @@
                         <td th:text="${tablero.nombre}">ROL</td>
                         <td>
                         <div class="button-container">
-                            <button class="btn editar" >
-                                <img src="img/editar.png" alt="Editar Icono">
+                            <button class="btn editar" th:data-id="${tablero.id_tablero}">
+                                <img src="img/editar.png" alt="Editar Icono" >
                                 Editar
                             </button>
                             <form th:action="@{/api/tablero/borrar/{id_tablero}(id_tablero=${tablero.id_tablero})}" method="get" style="display:inline;">

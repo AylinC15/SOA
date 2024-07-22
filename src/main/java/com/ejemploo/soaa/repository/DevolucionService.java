@@ -59,4 +59,14 @@ public class DevolucionService implements IDevolucionService {
         return row;
     }
 
+    @Override
+    public Devolucion findById(int id_devolucion) {
+        Devolucion devolucion = iDevolucionRepository.findById(id_devolucion);
+        if (devolucion == null) {
+            throw new RuntimeException("Devolución no encontrada con id: " + id_devolucion);
+        }
+        return devolucion;
+    }
+
+
 }

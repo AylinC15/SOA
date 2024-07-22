@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class DevolucionController {
     }
 
 
-    @PostMapping("/actualizar")
+    /*@PostMapping("/actualizar")
     public ResponseEntity<ServiceResponse> update(@RequestBody Devolucion devolucion){
 
         ServiceResponse serviceResponse = new ServiceResponse();
@@ -57,9 +58,28 @@ public class DevolucionController {
             serviceResponse.setMessage("Devolucion actualizada correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping("/borrar/{id_devolucion}")
+
+
+    @PostMapping("/actualizar")
+    public String actualizar(@ModelAttribute Devolucion devolucion, RedirectAttributes redirectAttributes) {
+        System.out.println("ID recibido en el controlador: " + devolucion.getId_devolucion());
+
+        if (devolucion.getId_devolucion() == 0) {
+            redirectAttributes.addFlashAttribute("error", "ID de devolución no válido");
+            return "redirect:/devoluciones";
+        }
+
+        int result = iDevolucionService.update(devolucion);
+        if (result > 0) {
+            redirectAttributes.addFlashAttribute("mensaje", "Devolución actualizada correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "No se pudo actualizar la devolución");
+        }
+        return "redirect:/devoluciones";
+    }
+    /*@GetMapping("/borrar/{id_devolucion}")
     public ResponseEntity<ServiceResponse> update(@PathVariable int id_devolucion){
 
         ServiceResponse serviceResponse = new ServiceResponse();
@@ -68,6 +88,17 @@ public class DevolucionController {
             serviceResponse.setMessage("Devolucion borrada correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }*/
+
+    @GetMapping("/borrar/{id_devolucion}")
+    public String delete(@PathVariable int id_devolucion, RedirectAttributes redirectAttributes) {
+        int result = iDevolucionService.deleteById(id_devolucion);
+        if (result == 1) {
+            redirectAttributes.addFlashAttribute("message", "Cliente borrado correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Error al borrar el cliente");
+        }
+        return "redirect:/devoluciones"; // Redirige a la vista de lista de clientes
     }
 
 }

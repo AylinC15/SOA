@@ -10,8 +10,10 @@
     <div class="modal" id="modal">
         <div class="modal-content">
             <span class="close-button" id="close-button">&times;</span>
-            <h2>Agregar Nuevo Producto</h2>
-            <form th:action="@{/api/almacen/guardar}" method="post" th:object="${producto}">
+            <h2 id="modalTitle">Gestionar Producto</h2>
+            <form th:action="${producto.id_producto == null || producto.id_producto == 0} ? @{/api/almacen/guardar} : @{/api/almacen/actualizar}" 
+            th:object="${producto}" method="post">
+                <input type="hidden" th:field="*{id_producto}">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" th:field="*{name}" placeholder="Ingresa el nombre del producto">
 
@@ -27,6 +29,8 @@
                 <label for="cantidad">Cantidad</label>
                 <input type="number" id="cantidad" th:field="*{cantidad}" placeholder="Ingresa la cantidad">
 
+                <input type="hidden" th:field="*{estado}" value="1" />
+                
                 <div class="button-group">
                     <button type="button" class="cancel-button" id="cancel-button">Cancelar</button>
                     <button type="submit" class="save-button">Guardar</button>

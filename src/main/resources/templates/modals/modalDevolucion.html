@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Nuevo Empleado</title>
+    <title>Gestionar Devolución</title>
     <link rel="stylesheet" th:href="@{/css/formulario.css}">
 </head>
 <body>
     <div class="modal" id="modalDevolucion">
         <div class="modal-content">
             <span class="close-button" id="close-button">&times;</span>
-            <h2>Agregar Nuevo Devolucion</h2>
-            <form th:action="@{/api/devolucion/guardar}" method="post" th:object="${devolucion}">
+            <h2 id="modalTitle">Gestionar Devolución</h2>
+            <form th:action="${devolucion.id_devolucion == null || devolucion.id_devolucion == 0} ? @{/api/devolucion/guardar} : @{/api/devolucion/actualizar}" 
+            th:object="${devolucion}" method="post">
+                <input type="hidden" th:field="*{id_devolucion}">
+
                 <label for="fecha">Fecha</label>
-                <input type="date" id="fecha" name="fecha" placeholder="Selecciona la fecha">
+                <input type="date" id="fecha" th:field="*{fecha}" placeholder="Selecciona la fecha">
 
                 <label for="producto">Producto</label>
                 <input type="text" id="producto" th:field="*{producto}" placeholder="Ingresa el producto">
 
-                <label for="codigo">Cliente</label>
-                <input type="number" id="id_cliente" th:field="*{id_cliente}" placeholder="Ingresa el codigo del cliente">
+                <label for="id_cliente">Cliente</label>
+                <input type="number" id="id_cliente" th:field="*{id_cliente}" placeholder="Ingresa el código del cliente">
 
-
+                <input type="hidden" th:field="*{estado}" value="1" />
                 <div class="button-group">
                     <button type="button" class="cancel-button" id="cancel-button">Cancelar</button>
                     <button type="submit" class="save-button">Guardar</button>

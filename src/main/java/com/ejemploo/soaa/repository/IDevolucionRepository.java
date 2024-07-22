@@ -9,4 +9,6 @@ public interface IDevolucionRepository {
     public int save(Devolucion devolucion);
     public int update(Devolucion devolucion);
     public int deleteById(int id_devolucion);
+    Devolucion findById(int id_devolucion);
+
 }

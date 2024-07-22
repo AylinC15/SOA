@@ -53,7 +53,7 @@
                         <td th:text="${cliente.direccion}">111111</td>
                         <td>
                         <div class="button-container">
-                            <button class="btn editar" >
+                            <button class="btn editar" th:data-id="${cliente.id_cliente}">
                                 <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>

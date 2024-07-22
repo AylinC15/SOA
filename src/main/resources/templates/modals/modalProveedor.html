@@ -10,14 +10,17 @@
     <div class="modal" id="modalProveedor">
         <div class="modal-content">
             <span class="close-button" id="close-button">&times;</span>
-            <h2>Agregar Nuevo Proveedor</h2>
-            <form th:action="@{/api/proveedor/guardar}" method="post" th:object="${proveedor}">
+            <h2 id="modalTitle">Gestionar Proveedor</h2>
+            <form th:action="${proveedor.id_proveedor == null || proveedor.id_proveedor == 0} ? @{/api/proveedor/guardar} : @{/api/proveedor/actualizar}" 
+            th:object="${proveedor}" method="post">
+            <input type="hidden" th:field="*{id_proveedor}">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" th:field="*{nombre_proveedor}" placeholder="Ingresa el nombre del cliente">
 
                 <label for="precio">Telefono</label>
                 <input type="number" id="telefono" th:field="*{telefono}" placeholder="Ingresa el telefono">
 
+                <input type="hidden" th:field="*{estado}" value="1" />
                 <div class="button-group">
                     <button type="button" class="cancel-button" id="cancel-button">Cancelar</button>
                     <button type="submit" class="save-button">Guardar</button>

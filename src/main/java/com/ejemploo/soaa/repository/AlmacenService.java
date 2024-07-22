@@ -1,5 +1,6 @@
 package com.ejemploo.soaa.repository;
 
+import com.ejemploo.soaa.model.Cliente;
 import com.ejemploo.soaa.model.Producto;
 import com.ejemploo.soaa.service.IAlmacenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,17 @@ public class AlmacenService implements IAlmacenService {
         }catch (Exception sex){
             throw sex;
         }
-
         return row;
+    }
+
+    @Override
+    public Producto findById(int id_producto){
+        Producto producto;
+        try {
+            producto = iAlmacenRepository.findById(id_producto);
+        }catch (Exception ex){
+            throw ex;
+        }
+        return producto;
     }
 }

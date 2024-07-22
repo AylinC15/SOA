@@ -1,10 +1,13 @@
 package com.ejemploo.soaa.repository;
 
 import com.ejemploo.soaa.model.Cliente;
+import com.ejemploo.soaa.model.Devolucion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -64,18 +67,21 @@ public class ClienteRepository implements IClienteRepository {
     }
 
     @Override
-    public Cliente findById(int id) {
-        String SQL = "SELECT * FROM cliente WHERE id_cliente = ?";
-        return jdbcTemplate.queryForObject(SQL, new Object[]{id}, new RowMapper<Cliente>() {
+    public Cliente findById(int id_cliente) {
+        String sql = "SELECT * FROM cliente WHERE id_cliente = ?";
+        return jdbcTemplate.query(sql, new Object[]{id_cliente}, new ResultSetExtractor<Cliente>() {
             @Override
-            public Cliente mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Cliente cliente = new Cliente();
-                cliente.setId_cliente(rs.getInt("id_cliente"));
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setTelefono(rs.getString("telefono"));
-                cliente.setRUC(rs.getString("RUC"));
-                cliente.setDireccion(rs.getString("direccion"));
-                return cliente;
+            public Cliente extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if (rs.next()) {
+                    Cliente cliente = new Cliente();
+                    cliente.setId_cliente(rs.getInt("id_cliente"));
+                    cliente.setNombre(rs.getString("nombre"));
+                    cliente.setDireccion(rs.getString("direccion"));
+                    cliente.setRUC(rs.getString("RUC"));
+                    cliente.setTelefono(rs.getString("telefono"));
+                    return cliente;
+                }
+                return null;
             }
         });
     }

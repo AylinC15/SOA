@@ -1,9 +1,6 @@
 package com.ejemploo.soaa.controller;
 
-import com.ejemploo.soaa.model.Cliente;
-import com.ejemploo.soaa.model.Devolucion;
-import com.ejemploo.soaa.model.Proveedor;
-import com.ejemploo.soaa.model.ServiceResponse;
+import com.ejemploo.soaa.model.*;
 import com.ejemploo.soaa.service.IProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,7 +48,7 @@ public class ProveedorController {
     }
 
 
-    @PostMapping("/actualizar")
+    /*@PostMapping("/actualizar")
     public ResponseEntity<ServiceResponse> update(@RequestBody Proveedor proveedor){
 
         ServiceResponse serviceResponse = new ServiceResponse();
@@ -60,6 +57,24 @@ public class ProveedorController {
             serviceResponse.setMessage("Proveedor actualizado correctamente");
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }*/
+
+    @PostMapping("/actualizar")
+    public String actualizar(@ModelAttribute Proveedor proveedor, RedirectAttributes redirectAttributes) {
+        System.out.println("ID recibido en el controlador: " + proveedor.getId_proveedor());
+
+        if (proveedor.getId_proveedor() == 0) {
+            redirectAttributes.addFlashAttribute("error", "ID de devolución no válido");
+            return "redirect:/proveedor";
+        }
+
+        int result = iProveedorService.update(proveedor);
+        if (result > 0) {
+            redirectAttributes.addFlashAttribute("mensaje", "Devolución actualizada correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "No se pudo actualizar la devolución");
+        }
+        return "redirect:/proveedor";
     }
 
     @GetMapping("/borrar/{nombre_proveedor}")

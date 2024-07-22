@@ -11,4 +11,5 @@ public interface IEmpleadoRepository {
     public  int deletebyNameEmpleado(String name);
     Empleado findByDni(String dni);
     Empleado findByNombreIgnoreCase(String nombre);
+    Empleado findById(int id_empleado);
 }

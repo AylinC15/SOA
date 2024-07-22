@@ -1,13 +1,18 @@
 package com.ejemploo.soaa.repository;
 
 
+import com.ejemploo.soaa.model.Producto;
 import com.ejemploo.soaa.model.Tablero;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -40,12 +45,20 @@ public class TableroRepository implements ITableroRepository{
     }
 
     @Override
-    public Tablero findById(int id_tablero){
-        try{
-            String SQL = "SELECT * FROM tablero WHERE id_tablero=?";
-            return jdbcTemplate.queryForObject(SQL, BeanPropertyRowMapper.newInstance(Tablero.class), id_tablero);
-        } catch (EmptyResultDataAccessException e){
-            return null;
-        }
+    public Tablero findById(int id_tablero) {
+        String sql = "SELECT * FROM tablero WHERE id_tablero = ?";
+        return jdbcTemplate.query(sql, new Object[]{id_tablero}, new ResultSetExtractor<Tablero>() {
+            @Override
+            public Tablero extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if (rs.next()) {
+                    Tablero tablero = new Tablero();
+                    tablero.setId_tablero(rs.getInt("id_tablero"));
+                    tablero.setProgreso(rs.getString("progreso"));
+                    tablero.setId_cliente(rs.getInt("id_cliente"));
+                    return tablero;
+                }
+                return null;
+            }
+        });
     }
 }

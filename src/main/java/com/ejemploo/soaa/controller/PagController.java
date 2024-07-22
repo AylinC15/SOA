@@ -2,7 +2,7 @@ package com.ejemploo.soaa.controller;
 
 import com.ejemploo.soaa.model.*;
 import com.ejemploo.soaa.repository.*;
-import com.ejemploo.soaa.service.IClienteService;
+import com.ejemploo.soaa.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ public class PagController {
         return "home";
     }
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
@@ -28,13 +28,31 @@ public class PagController {
         return "modal";  // Esta es la vista del modal
     }
 
+    @Autowired
+    private IAlmacenService iAlmacenService;
+
+    @GetMapping("/modal/{id}")
+    public String getModalProdcutoEdit(@PathVariable Long id, Model model) {
+        Producto producto= iAlmacenService.findById(Math.toIntExact(id));
+        model.addAttribute("producto", producto);
+        return "modal";
+    }
+
     @GetMapping("/modalCliente")
     public String showModal2(Model model) {
         model.addAttribute("cliente", new Cliente());
         return "modals/modalCliente";  // Vista para el segundo modal
     }
 
+    @Autowired
+    private IClienteService iClienteService;
 
+    @GetMapping("/modalCliente/{id}")
+    public String getModalClienteEdit(@PathVariable Long id, Model model) {
+        Cliente cliente = iClienteService.findById(Math.toIntExact(id));
+        model.addAttribute("cliente", cliente);
+        return "modals/modalCliente";
+    }
 
 
     @GetMapping("/modalDevolucion")
@@ -43,10 +61,31 @@ public class PagController {
         return "modals/modalDevolucion";  // Vista para el segundo modal
     }
 
+    @Autowired
+    private IDevolucionService iDevolucionService;
+
+    @GetMapping("/modalDevolucion/{id}")
+    public String getModalDevolucionEdit(@PathVariable Long id, Model model) {
+        Devolucion devolucion = iDevolucionService.findById(Math.toIntExact(id));
+        model.addAttribute("devolucion", devolucion);
+        return "modals/modalDevolucion";
+    }
+
+
     @GetMapping("/modalEmpleado")
     public String showModal4(Model model) {
         model.addAttribute("empleado", new Empleado());
         return "modals/modalEmpleado";  // Vista para el segundo modal
+    }
+
+    @Autowired
+    private IEmpleadoService iEmpleadoService;
+
+    @GetMapping("/modalEmpleado/{id}")
+    public String getModalEmpleadoEdit(@PathVariable Long id, Model model) {
+        Empleado empleado = iEmpleadoService.findById(Math.toIntExact(id));
+        model.addAttribute("empleado", empleado);
+        return "modals/modalEmpleado";
     }
 
     @GetMapping("/modalServicio")
@@ -61,12 +100,31 @@ public class PagController {
         return "modals/modalProveedor";  // Vista para el segundo modal
     }
 
+    @Autowired
+    private IProveedorService iProveedorService;
+
+    @GetMapping("/modalProveedor/{id}")
+    public String getModalProveedorEdit(@PathVariable Long id, Model model) {
+        Proveedor proveedor= iProveedorService.findById(Math.toIntExact(id));
+        model.addAttribute("proveedor", proveedor);
+        return "modals/modalProveedor";
+    }
+
     @GetMapping("/modalTablero")
     public String showModal7(Model model) {
         model.addAttribute("tablero", new Tablero());
         return "modals/modalTablero";  // Vista para el segundo modal
     }
 
+    @Autowired
+    private ITableroService iTableroService;
+
+    @GetMapping("/modalTablero/{id}")
+    public String getModalTableroEdit(@PathVariable Long id, Model model) {
+        Tablero tablero= iTableroService.findById(Math.toIntExact(id));
+        model.addAttribute("tablero", tablero);
+        return "modals/modalTablero";
+    }
 
     @Autowired
     private OurUserRepository ourUserRepository;
@@ -123,7 +181,6 @@ public class PagController {
         return "productos";
     }
 
-
     @Autowired
     private IServicioRepository iServicioRepository;
 
@@ -142,13 +199,15 @@ public class PagController {
         return "devoluciones";
     }
 
+
+
     /*@Autowired
-    private IVentaRepository iVentaRepository;
+    private VentaRepository iVentaRepository;
 
     @GetMapping("/ventas")
     public String listarVenta(Model model){
         model.addAttribute("ventas", iVentaRepository.findAll());
-        return "devoluciones";
+        return "ventas";
     }*/
 
 }

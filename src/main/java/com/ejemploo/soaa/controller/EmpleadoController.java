@@ -1,5 +1,6 @@
 package com.ejemploo.soaa.controller;
 
+import com.ejemploo.soaa.model.Cliente;
 import com.ejemploo.soaa.model.Empleado;
 import com.ejemploo.soaa.model.ServiceResponse;
 import com.ejemploo.soaa.model.Servicio;
@@ -50,7 +51,7 @@ public class EmpleadoController {
         return "redirect:/empleados";
     }
 
-    @PostMapping("/actualizar")
+    /*@PostMapping("/actualizar")
     public ResponseEntity<ServiceResponse> update(@RequestBody Empleado empleado){
         ServiceResponse serviceResponse = new ServiceResponse();
             int result = iEmpleadoService.update(empleado);
@@ -58,6 +59,24 @@ public class EmpleadoController {
                 serviceResponse.setMessage("Dato de empleado actualizado");
             }
             return  new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+    }*/
+
+    @PostMapping("/actualizar")
+    public String actualizar(@ModelAttribute Empleado empleado, RedirectAttributes redirectAttributes) {
+        System.out.println("ID recibido en el controlador: " + empleado.getId_empleado());
+
+        if (empleado.getId_empleado() == 0) {
+            redirectAttributes.addFlashAttribute("error", "ID de devolución no válido");
+            return "redirect:/empleados";
+        }
+
+        int result = iEmpleadoService.update(empleado);
+        if (result > 0) {
+            redirectAttributes.addFlashAttribute("mensaje", "Devolución actualizada correctamente");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "No se pudo actualizar la devolución");
+        }
+        return "redirect:/empleados";
     }
 
     /*@GetMapping("/borrar/{name}")
