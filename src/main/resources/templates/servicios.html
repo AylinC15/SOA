@@ -32,7 +32,7 @@
                 <button id="open-modalServicio-button" class="btn-add-product">
                     <span class="icon">+</span> Añadir Servicio
                 </button>
-                <button id="generar-cotizacion-button" class="btn-generar-cotizacion">
+                <button id="generar-cotizacion-button" class="btn-add-product">
                     <span class="icon">📄</span> Generar Cotización
                 </button>
             </div> 
@@ -56,8 +56,8 @@
                         <td th:text="${servicio.precio}">00</td>
                         <td>
                         <div class="button-container">
-                            <button class="btn editar" >
-                                <img src="img/editar.png" alt="Editar Icono">
+                            <button class="btn editar" th:data-id="${servicio.id_servicio}">
+                                <img src="img/editar.png" alt="Editar Icono" >
                                 Editar
                             </button>
                             <form th:action="@{/api/servicio/borrar/{tipo_servicio}(tipo_servicio=${servicio.tipo_servicio})}" method="get">

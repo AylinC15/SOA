@@ -10,9 +10,10 @@
     <div class="modal" id="modalServicio">
         <div class="modal-content">
             <span class="close-button" id="close-button">&times;</span>
-            <h2>Agregar Nuevo Servicio</h2>
-            <form th:action="@{/api/servicio/guardar}" method="post" th:object="${servicio}">
-                <label for="tipo">Tipo de Servicio</label>
+            <h2 id="modalTitle">Gestionar Tablero</h2>
+            <form th:action="${servicio.id_servicio == null || servicio.id_servicio == 0} ? @{/api/servicio/guardar} : @{/api/servicio/actualizar}" 
+            th:object="${servicio}" method="post">
+                <input type="hidden" th:field="*{id_servicio}">
                 <input type="text" id="tipo" th:field="*{tipo_servicio}" placeholder="Ingresa el tipo de Servicio">
 
                 <label for="descripcion">Descripcion</label>

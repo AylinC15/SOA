@@ -94,6 +94,16 @@ public class PagController {
         return "modals/modalServicio";  // Vista para el segundo modal
     }
 
+    @Autowired
+    private IServicioService iServicioService;
+
+    @GetMapping("/modalServicio/{id}")
+    public String getModalServicioEdit(@PathVariable Long id, Model model) {
+        Servicio servicio = iServicioService.findById(Math.toIntExact(id));
+        model.addAttribute("servicio", servicio);
+        return "modals/modalServicio";
+    }
+
     @GetMapping("/modalProveedor")
     public String showModal6(Model model) {
         model.addAttribute("proveedor", new Proveedor());
