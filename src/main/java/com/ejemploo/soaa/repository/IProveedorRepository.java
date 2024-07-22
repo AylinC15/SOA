@@ -12,6 +12,5 @@ public interface IProveedorRepository {
     public int deleteByName(String name_proveedor);
     Proveedor findByNombreIgnoreCase(String nombre_proveeor);
     Proveedor findById(int id_proveedor);
-
-
+    List<Proveedor> findByNombreIgnoreCaseContaining(String nombre_proveedor);
 }

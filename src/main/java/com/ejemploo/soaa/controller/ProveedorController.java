@@ -3,13 +3,17 @@ package com.ejemploo.soaa.controller;
 import com.ejemploo.soaa.model.*;
 import com.ejemploo.soaa.service.IProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -77,8 +81,9 @@ public class ProveedorController {
         return "redirect:/proveedor";
     }
 
+    /*
     @GetMapping("/borrar/{nombre_proveedor}")
-    /*public ResponseEntity<ServiceResponse> update(@PathVariable String nombre_proveedor){
+    public ResponseEntity<ServiceResponse> update(@PathVariable String nombre_proveedor){
 
         ServiceResponse serviceResponse = new ServiceResponse();
         int result = iProveedorService.deleteByName(nombre_proveedor);
@@ -87,6 +92,30 @@ public class ProveedorController {
         }
         return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }*/
+
+    @GetMapping("/buscarProveedor")
+    public ResponseEntity<?> buscarProveedor(@RequestParam(required = false) String termino) {
+        System.out.println("Búsqueda - Término: " + termino);
+
+        List<Proveedor> proveedores = new ArrayList<>();
+
+        try {
+            if (termino == null || termino.trim().isEmpty()) {
+                // Si el término está vacío, devolver todos los proveedores
+                proveedores = iProveedorService.findAll();
+            } else {
+                proveedores = iProveedorService.findByNombreIgnoreCaseContaining(termino);
+            }
+
+            System.out.println("Proveedores encontrados: " + proveedores.size());
+            return new ResponseEntity<>(proveedores, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error en la búsqueda: " + e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK); // Devolver una lista vacía en caso de error
+        }
+    }
+
 
     public String delete(@PathVariable String nombre_proveedor, RedirectAttributes redirectAttributes) {
         ServiceResponse serviceResponse = new ServiceResponse();

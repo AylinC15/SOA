@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -50,7 +51,16 @@ public class ProveedorRepository implements IProveedorRepository{
         } catch (EmptyResultDataAccessException e){
             return null;
         }
+    }
 
+    @Override
+    public List<Proveedor> findByNombreIgnoreCaseContaining(String nombre_proveedor) {
+        try {
+            String SQL = "SELECT * FROM proveedor WHERE UPPER(nombre_proveedor) LIKE UPPER(?)";
+            return jdbcTemplate.query(SQL, new Object[]{"%" + nombre_proveedor + "%"}, new BeanPropertyRowMapper<>(Proveedor.class));
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override

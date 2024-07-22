@@ -68,6 +68,15 @@ public class ProveedorService implements IProveedorService {
     }
 
     @Override
+    public List<Proveedor> findByNombreIgnoreCaseContaining(String nombre_proveedor) {
+        try {
+            return iProveedorRepository.findByNombreIgnoreCaseContaining(nombre_proveedor);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Override
     public Proveedor findById(int id_proveedor){
         Proveedor proveedor;
         try {
