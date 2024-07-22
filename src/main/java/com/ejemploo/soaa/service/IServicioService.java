@@ -7,5 +7,5 @@ public interface IServicioService {
     public int save(Servicio servicio);
     public int update(Servicio servicio);
     public int deleteByName (String tipo_servicio);
-
+    List<Servicio> findByEmpleadoId(int id_empleado); // Nuevo método
 }

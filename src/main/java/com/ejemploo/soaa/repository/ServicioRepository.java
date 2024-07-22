@@ -4,8 +4,11 @@ import com.ejemploo.soaa.model.Servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -37,4 +40,23 @@ public class ServicioRepository implements IServicioRepository{
         return jdbcTemplate.update(SQL, new Object[]{tipo_servicio});
     }
 
+    private RowMapper<Servicio> rowMapper = new RowMapper<Servicio>() {
+        @Override
+        public Servicio mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Servicio servicio = new Servicio();
+            servicio.setId_servicio(rs.getInt("id_servicio"));
+            servicio.setTipo_servicio(rs.getString("tipo_servicio"));
+            servicio.setDescripcion(rs.getString("descripcion"));
+            servicio.setEstado(rs.getInt("estado"));
+            servicio.setId_empleado(rs.getInt("id_empleado"));
+            servicio.setPrecio(rs.getBigDecimal("precio")); // Si has añadido esta columna
+            servicio.setName(rs.getString("name"));
+            return servicio;
+        }
+    };
+
+    public List<Servicio> findByEmpleadoId(int id_empleado) {
+        String sql = "SELECT s.*, e.name FROM servicio s INNER JOIN empleado e ON s.id_empleado = e.id_empleado WHERE s.id_empleado = ?";
+        return jdbcTemplate.query(sql, new Object[]{id_empleado}, rowMapper);
+    }
 }

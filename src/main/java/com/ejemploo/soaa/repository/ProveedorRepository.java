@@ -23,7 +23,7 @@ public class ProveedorRepository implements IProveedorRepository{
     public int save(Proveedor proveedor) {
         String SQL = "INSERT INTO proveedor (nombre_proveedor, telefono) VALUES (?, ?)";
         return jdbcTemplate.update(SQL, new Object[]{proveedor.getNombre_proveedor(), proveedor.getTelefono()});
-    }
+    }   
 
     @Override
     public int update(Proveedor proveedor){
