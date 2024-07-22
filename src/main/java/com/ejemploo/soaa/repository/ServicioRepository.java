@@ -1,9 +1,12 @@
 package com.ejemploo.soaa.repository;
 
+import com.ejemploo.soaa.model.Producto;
 import com.ejemploo.soaa.model.Servicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -59,4 +62,24 @@ public class ServicioRepository implements IServicioRepository{
         String sql = "SELECT s.*, e.name FROM servicio s INNER JOIN empleado e ON s.id_empleado = e.id_empleado WHERE s.id_empleado = ?";
         return jdbcTemplate.query(sql, new Object[]{id_empleado}, rowMapper);
     }
+
+    @Override
+    public Servicio findById(int id_servicio) {
+        String sql = "SELECT * FROM servicio WHERE id_servicio = ?";
+        return jdbcTemplate.query(sql, new Object[]{id_servicio}, new ResultSetExtractor<Servicio>() {
+            @Override
+            public Servicio extractData(ResultSet rs) throws SQLException, DataAccessException {
+                if (rs.next()) {
+                    Servicio servicio = new Servicio();
+                    servicio.setId_servicio(rs.getInt("id_servicio"));
+                    servicio.setTipo_servicio(rs.getString("tipo_servicio"));
+                    servicio.setDescripcion(rs.getString("descripcion"));
+                    servicio.setPrecio(rs.getBigDecimal("precio"));
+                    return servicio;
+                }
+                return null;
+            }
+        });
+    }
+
 }

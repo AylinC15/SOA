@@ -40,8 +40,6 @@
                         <th>Fecha</th>
                         <th>Cantidad</th>
                         <th>Precio</th>
-                        <th>Cliente</th>
-                        <th>Empleado a Cargo</th>
                         <th>Productos</th>
                         <th>Acciones</th>
                     </tr>
@@ -52,15 +50,13 @@
                         <td th:text="${venta.fecha}">John Doe</td>
                         <td th:text="${venta.cantidad_venta}">xxxxxx</td>
                         <td th:text="${venta.total_pagar}">00.00</td>
-                        <td th:text="${venta.id_cliente}">0000</td>
-                        <td th:text="${venta.id_empleado}">00.00</td>
                         <td th:text="${venta.id_producto}">00.00</td>
                         <td><div class="button-container">
-                            <button  class="btn editar" >
+                            <button  class="btn editar" th:data-id="${venta.id_venta}">
                                 <img src="img/editar.png" alt="Editar Icono">
                                 Editar
                             </button>
-                            <form th:action="@{/api/venta/borrar/{name}(name=${producto.name})}" method="get" style="display:inline;">
+                            <form th:action="@{/api/venta/borrar/{id_venta}(id_venta=${venta.id_venta})}" method="get" style="display:inline;">
                             <button class="btn eliminar">
                                 <img src="img/basura.png" alt="Eliminar Icono">
                                 Eliminar

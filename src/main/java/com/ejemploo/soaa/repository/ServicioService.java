@@ -1,5 +1,6 @@
 package com.ejemploo.soaa.repository;
 
+import com.ejemploo.soaa.model.Producto;
 import com.ejemploo.soaa.model.Servicio;
 import com.ejemploo.soaa.service.IServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,17 @@ public class ServicioService implements IServicioService {
     @Override
     public List<Servicio> findByEmpleadoId(int id_empleado) {
         return iServicioRepository.findByEmpleadoId(id_empleado); // Implementación del nuevo método
+    }
+
+    @Override
+    public Servicio findById(int id_servicio){
+        Servicio servicio;
+        try {
+            servicio= iServicioRepository.findById(id_servicio);
+        }catch (Exception ex){
+            throw ex;
+        }
+        return servicio;
     }
 
 }

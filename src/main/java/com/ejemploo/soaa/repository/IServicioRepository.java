@@ -11,4 +11,5 @@ public interface IServicioRepository {
     public int update(Servicio servicio);
     public int deleteByName(String tipo_servicio);
     List<Servicio> findByEmpleadoId(int id_empleado);
+    Servicio findById(int id_servicio);
 }

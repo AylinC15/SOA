@@ -94,6 +94,16 @@ public class PagController {
         return "modals/modalServicio";  // Vista para el segundo modal
     }
 
+    @Autowired
+    private IServicioService iServicioService;
+
+    @GetMapping("/modalServicio/{id}")
+    public String getModalServicioEdit(@PathVariable Long id, Model model) {
+        Servicio servicio = iServicioService.findById(Math.toIntExact(id));
+        model.addAttribute("servicio", servicio);
+        return "modals/modalServicio";
+    }
+
     @GetMapping("/modalProveedor")
     public String showModal6(Model model) {
         model.addAttribute("proveedor", new Proveedor());
@@ -124,6 +134,22 @@ public class PagController {
         Tablero tablero= iTableroService.findById(Math.toIntExact(id));
         model.addAttribute("tablero", tablero);
         return "modals/modalTablero";
+    }
+
+    @GetMapping("/modalVenta")
+    public String showModal8(Model model) {
+        model.addAttribute("venta", new Venta());
+        return "modals/modalVenta";  // Vista para el segundo modal
+    }
+
+    @Autowired
+    private IVentaService iVentaService;
+
+    @GetMapping("/modalVenta/{id}")
+    public String getModalVentaEdit(@PathVariable Long id, Model model) {
+        Venta venta= iVentaService.findByIdE(Math.toIntExact(id));
+        model.addAttribute("venta", venta);
+        return "modals/modalVenta";
     }
 
     @Autowired
@@ -200,14 +226,13 @@ public class PagController {
     }
 
 
-
-    /*@Autowired
+    @Autowired
     private VentaRepository iVentaRepository;
 
     @GetMapping("/ventas")
     public String listarVenta(Model model){
         model.addAttribute("ventas", iVentaRepository.findAll());
         return "ventas";
-    }*/
+    }
 
 }

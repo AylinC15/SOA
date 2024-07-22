@@ -3,74 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proveedores Registrados</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Usuarios Registrados</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<div class="container">
-    <aside class="sidebar">
-        <ul>
-            <li><a href="#"> <img src="img/carrito-de-compras.png" alt="Ventas Icono" class="icon"> Ventas</a></li>
-            <li><a th:href="@{/devoluciones}"> <img src="img/flechas-repetir.png"alt="Devoluciones Icono" class="icon"> Devoluciones</a></li>
-            <li><a th:href="@{/usuario}"> <img src="img/usuarios.png"alt="Usuarios Icono" class="icon">Usuarios</a></li>
-            <li><a th:href="@{/productos}"> <img src="img/cubo.png"alt="Productos Icono" class="icon">Productos</a></li>
-            <li><a th:href="@{/empleados}"> <img src="img/bolsa-de-la-compra.png"alt="Empleados Icono" class="icon">Empleados</a></li>
-            <li><a th:href="@{/tablero}"> <img src="img/aplicaciones.png"alt="Tableros Icono" class="icon">Tableros</a></li>
-            <li><a th:href="@{/servicios}"> <img src="img/llave-inglesa-alternativa.png"alt="Servicios Icono" class="icon">Servicios</a></li>
-            <li><a th:href="@{/clientes}"> <img src="img/clientes.png"alt="Cliente Icono" class="icon">Clientes</a></li>
-            <li><a th:href="@{/proveedor}"> <img src="img/proveedor.png"alt="Proveedor Icono" class="icon">Proveedores</a></li>
-        </ul>
-        <button class="logout"> <img src="img/salir-alt.png" alt="cerrar Icono" class="icon"> Cerrar sesión</button>
-    </aside>
-
-    <main class="content">
-        <h1>Proveedores registrados</h1>
-        <div class="button-wrapper">
-            <button id="open-modalProveedor-button" class="btn-add-product">
-                <span class="icon">+</span> Añadir proveedor
-            </button>
-            <div class="search-wrapper">
-                <input type="text" id="searchTermProveedor" placeholder="Buscar proveedor...">
-                <select id="searchTypeProveedor">
-                    <option value="nombre">Nombre</option>
-                    <option value="telefono">Teléfono</option>
-                </select>
-                <button id="searchButtonProveedor">Buscar</button>
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#"> <img src="img/carrito-de-compras.png" alt="Ventas Icono" class="icon"> Ventas</a></li>
+                <li><a th:href="@{/devoluciones}"> <img src="img/flechas-repetir.png"alt="Devoluciones Icono" class="icon"> Devoluciones</a></li>
+                <li><a th:href="@{/usuario}"> <img src="img/usuarios.png"alt="Usuarios Icono" class="icon">Usuarios</a></li>
+                <li><a th:href="@{/productos}"> <img src="img/cubo.png"alt="Productos Icono" class="icon">Productos</a></li>
+                <li><a th:href="@{/empleados}"> <img src="img/bolsa-de-la-compra.png"alt="Empleados Icono" class="icon">Empleados</a></li>
+                <li><a th:href="@{/tablero}"> <img src="img/aplicaciones.png"alt="Tableros Icono" class="icon">Tableros</a></li>
+                <li><a th:href="@{/servicios}"> <img src="img/llave-inglesa-alternativa.png"alt="Servicios Icono" class="icon">Servicios</a></li>
+                <li><a th:href="@{/clientes}"> <img src="img/clientes.png"alt="Cliente Icono" class="icon">Clientes</a></li>
+                <li><a th:href="@{/proveedor}"> <img src="img/proveedor.png"alt="Proveedor Icono" class="icon">Proveedores</a></li>
+            </ul>
+            <button class="logout"> <img src="img/salir-alt.png" alt="cerrar Icono" class="icon"> Cerrar sesión</button>
+        </aside>
+    
+        <main class="content">
+            <div class="top-bar">
+                <img src="img/logo.png" alt="logo" class="logo">
             </div>
-        </div>
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Telefono</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="proveedor : ${proveedores}" >
-                <td th:text="${proveedor.id_proveedor}">1</td>
-                <td th:text="${proveedor.nombre_proveedor}">John Doe</td>
-                <td th:text="${proveedor.telefono}">TELEFONO</td>
-                <td>
-                    <div class="button-container">
-                        <button  class="btn editar" th:data-id="${proveedor.id_proveedor}">
-                            <img src="img/editar.png" alt="Editar Icono">
-                            Editar
-                        </button>
-                        <form th:action="@{/api/proveedor/borrar/{nombre_proveedor}(nombre_proveedor=${proveedor.nombre_proveedor})}" method="get">
-                            <button class="btn eliminar">
+            <h1>Proveedores registrados</h1>
+            <div class="button-wrapper">
+                <button id="open-modalProveedor-button" class="btn-add-product">
+                    <span class="icon">+</span> Añadir proveedor
+                </button>
+            </div> 
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="proveedor : ${proveedores}" >
+                        <td th:text="${proveedor.id_proveedor}">1</td>
+                        <td th:text="${proveedor.nombre_proveedor}">John Doe</td>
+                        <td th:text="${proveedor.telefono}">TELEFONO</td>
+                        <td>
+                        <div class="button-container">
+                            <button  class="btn editar" th:data-id="${proveedor.id_proveedor}">
+                                <img src="img/editar.png" alt="Editar Icono">
+                                Editar
+                            </button>
+                            <form th:action="@{/api/proveedor/borrar/{nombre_proveedor}(nombre_proveedor=${proveedor.nombre_proveedor})}" method="get">
+                                <button class="btn eliminar">
                                 <img src="img/basura.png" alt="Eliminar Icono">
                                 Eliminar
-                            </button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </main>
-</div>
-<script src="js/scriptP.js"></script>
+                            </button></form>
+                        </div></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </main>  
+    </div>
+    <script th:src="@{/js/scriptP.js}"></script>
 </body>
 </html>
