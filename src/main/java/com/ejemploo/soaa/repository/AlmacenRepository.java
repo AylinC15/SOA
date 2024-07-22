@@ -1,16 +1,11 @@
 package com.ejemploo.soaa.repository;
 
-import com.ejemploo.soaa.model.Empleado;
 import com.ejemploo.soaa.model.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -40,27 +35,6 @@ public class AlmacenRepository implements IAlmacenRepository{
     public int deleteByName(String name) {
         String SQL = "UPDATE producto SET estado= 0 WHERE name=?";
         return jdbcTemplate.update(SQL, new Object[]{name});
-    }
-
-    @Override
-    public Producto findById(int id_producto) {
-        String sql = "SELECT * FROM producto WHERE id_producto = ?";
-        return jdbcTemplate.query(sql, new Object[]{id_producto}, new ResultSetExtractor<Producto>() {
-            @Override
-            public Producto extractData(ResultSet rs) throws SQLException, DataAccessException {
-                if (rs.next()) {
-                    Producto producto = new Producto();
-                    producto.setId_producto(rs.getInt("id_producto"));
-                    producto.setName(rs.getString("name"));
-                    producto.setMarca(rs.getString("marca"));
-                    producto.setCantidad(rs.getInt("cantidad"));
-                    producto.setPrecio(rs.getBigDecimal("precio"));
-                    producto.setId_proveedor(rs.getInt("id_proveedor"));
-                    return producto;
-                }
-                return null;
-            }
-        });
     }
 
 

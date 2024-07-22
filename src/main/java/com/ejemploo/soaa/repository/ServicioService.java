@@ -57,4 +57,10 @@ public class ServicioService implements IServicioService {
         }
         return row;
     }
+
+    @Override
+    public List<Servicio> findByEmpleadoId(int id_empleado) {
+        return iServicioRepository.findByEmpleadoId(id_empleado); // Implementación del nuevo método
+    }
+
 }

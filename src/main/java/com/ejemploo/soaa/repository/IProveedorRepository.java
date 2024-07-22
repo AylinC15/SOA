@@ -13,4 +13,5 @@ public interface IProveedorRepository {
     Proveedor findByNombreIgnoreCase(String nombre_proveeor);
     Proveedor findById(int id_proveedor);
 
+
 }

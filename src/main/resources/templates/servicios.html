@@ -32,6 +32,9 @@
                 <button id="open-modalServicio-button" class="btn-add-product">
                     <span class="icon">+</span> Añadir Servicio
                 </button>
+                <button id="generar-cotizacion-button" class="btn-generar-cotizacion">
+                    <span class="icon">📄</span> Generar Cotización
+                </button>
             </div> 
             <table>
                 <thead>
@@ -40,6 +43,7 @@
                         <th>Servicios</th>
                         <th>Descripcion</th>
                         <th>Nombre</th>
+                        <th>Precio</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -49,6 +53,7 @@
                         <td th:text="${servicio.tipo_servicio}">John Doe</td>
                         <td th:text="${servicio.descripcion}">ROL</td>
                         <td th:text="${servicio.name}">00.00</td>
+                        <td th:text="${servicio.precio}">00</td>
                         <td>
                         <div class="button-container">
                             <button class="btn editar" >

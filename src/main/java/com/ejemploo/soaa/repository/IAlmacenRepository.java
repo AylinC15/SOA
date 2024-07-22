@@ -10,5 +10,4 @@ public interface IAlmacenRepository {
     public int save(Producto producto);
     public int update(Producto producto);
     public int deleteByName (String name);
-    Producto findById(int id_producto);
 }
