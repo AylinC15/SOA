@@ -34,7 +34,7 @@ public class SecurityConfig {
         return http.build();
     }*/
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**").permitAll()
@@ -48,24 +48,29 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions().sameOrigin());
 
         return http.build();
-    }
+    }*/
 
 
-    /*@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**", "/modalCliente", "/modalProducto").permitAll()
+                        .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")  // URL de tu página de inicio de sesión personalizada
                         .loginProcessingUrl("/login")  // URL a la que se envía el formulario de inicio de sesión
-                        .defaultSuccessUrl("/home", true)  // URL a la que se redirige tras un inicio de sesión exitoso
+                        .defaultSuccessUrl("/ventas", true)  // URL a la que se redirige tras un inicio de sesión exitoso
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")  // URL para manejar el logout
+                        .logoutSuccessUrl("/login?logout")  // URL a la que se redirige tras un logout exitoso
                         .permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions().sameOrigin());
 
         return http.build();
-    }*/
+    }
+
 
     @Bean
     public UserDetailsService userDetailsService(){

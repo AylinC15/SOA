@@ -20,7 +20,12 @@
                 <li><a th:href="@{/clientes}"> <img src="img/clientes.png"alt="Cliente Icono" class="icon">Clientes</a></li>
                 <li><a th:href="@{/proveedor}"> <img src="img/proveedor.png"alt="Proveedor Icono" class="icon">Proveedores</a></li>
             </ul>
-            <button class="logout"> <img src="img/salir-alt.png" alt="cerrar Icono" class="icon"> Cerrar sesión</button>
+            <<form id="logout-form" action="/logout" method="post" style="display: inline;">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <button type="submit" class="logout">
+                    <img src="img/salir-alt.png" alt="cerrar Icono" class="icon"> Cerrar sesión
+                </button>
+            </form>
         </aside>
     
         <main class="content">
