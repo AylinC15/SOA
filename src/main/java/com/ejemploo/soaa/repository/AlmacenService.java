@@ -72,4 +72,16 @@ public class AlmacenService implements IAlmacenService {
         }
         return producto;
     }
+
+    @Override
+    public List<Producto> findByNameIgnoreCaseContaining(String name) {
+        List<Producto> productos;
+        try {
+            productos = iAlmacenRepository.findByNameIgnoreCaseContaining(name);
+        } catch (Exception e) {
+            throw e;
+        }
+        return productos;
+    }
+
 }

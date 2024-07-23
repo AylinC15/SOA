@@ -12,6 +12,7 @@ public interface IAlmacenService {
     public int update(Producto producto);
     public int deleteByName (String name);
     Producto findByIdProducto(int id_empleado);
+    List<Producto> findByNameIgnoreCaseContaining(String name);
 
 
 }

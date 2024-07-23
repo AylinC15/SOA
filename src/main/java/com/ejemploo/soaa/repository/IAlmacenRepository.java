@@ -14,5 +14,6 @@ public interface IAlmacenRepository {
     public int deleteByName (String name);
     Producto findByIdProducto(int id_empleado);
     Optional<Producto> findById(int id_producto);
+    List<Producto> findByNameIgnoreCaseContaining(String name);
 
 }

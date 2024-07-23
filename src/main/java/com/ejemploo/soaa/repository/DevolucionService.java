@@ -68,5 +68,15 @@ public class DevolucionService implements IDevolucionService {
         return devolucion;
     }
 
+    @Override
+    public List<Devolucion> findByProductoIgnoreCaseContaining(String producto) {
+        List<Devolucion> list;
+        try {
+            list = iDevolucionRepository.findByProductoIgnoreCaseContaining(producto);
+        } catch (Exception e) {
+            throw e;
+        }
+        return list;
+    }
 
 }

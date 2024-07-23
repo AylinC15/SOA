@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -103,6 +104,28 @@ public class ProductoController {
             redirectAttributes.addFlashAttribute("message", "Error al borrar el producto");
         }
         return "redirect:/productos"; // Redirige a la vista de lista de productos
+    }
+
+    @GetMapping("/buscarProducto")
+    public ResponseEntity<?> buscarProducto(@RequestParam(required = false) String name) {
+        System.out.println("Búsqueda - Producto: " + name);
+
+        List<Producto> productos = new ArrayList<>();
+
+        try {
+            if (name == null || name.trim().isEmpty()) {
+                productos = iAlmacenService.findAll();
+            } else {
+                productos = iAlmacenService.findByNameIgnoreCaseContaining(name);
+            }
+
+            System.out.println("Productos encontrados: " + productos.size());
+            return new ResponseEntity<>(productos, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error en la búsqueda: " + e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+        }
     }
 
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 @Repository
 public class DevolucionRepository implements  IDevolucionRepository{
@@ -60,6 +61,16 @@ public class DevolucionRepository implements  IDevolucionRepository{
                 return null;
             }
         });
+    }
+
+    @Override
+    public List<Devolucion> findByProductoIgnoreCaseContaining(String producto) {
+        try {
+            String SQL = "SELECT * FROM devolucion WHERE UPPER(producto) LIKE UPPER(?)";
+            return jdbcTemplate.query(SQL, new Object[]{"%" + producto + "%"}, new BeanPropertyRowMapper<>(Devolucion.class));
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
     }
 
 }

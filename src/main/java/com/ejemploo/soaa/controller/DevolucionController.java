@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -99,6 +100,28 @@ public class DevolucionController {
             redirectAttributes.addFlashAttribute("message", "Error al borrar el cliente");
         }
         return "redirect:/devoluciones"; // Redirige a la vista de lista de clientes
+    }
+
+    @GetMapping("/buscarDevolucion")
+    public ResponseEntity<?> buscarDevolucion(@RequestParam(required = false) String producto) {
+        System.out.println("Búsqueda - Producto: " + producto);
+
+        List<Devolucion> devoluciones = new ArrayList<>();
+
+        try {
+            if (producto == null || producto.trim().isEmpty()) {
+                devoluciones = iDevolucionService.findAll();
+            } else {
+                devoluciones = iDevolucionService.findByProductoIgnoreCaseContaining(producto);
+            }
+
+            System.out.println("Devoluciones encontradas: " + devoluciones.size());
+            return new ResponseEntity<>(devoluciones, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error en la búsqueda: " + e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+        }
     }
 
 }

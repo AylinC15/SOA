@@ -4,6 +4,7 @@ import com.ejemploo.soaa.model.Cliente;
 import com.ejemploo.soaa.model.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,5 +83,14 @@ public class AlmacenRepository implements IAlmacenRepository{
         return Optional.of(productos.get(0));
 }
 
+    @Override
+    public List<Producto> findByNameIgnoreCaseContaining(String name) {
+        try {
+            String SQL = "SELECT * FROM producto WHERE UPPER(name) LIKE UPPER(?)";
+            return jdbcTemplate.query(SQL, new Object[]{"%" + name + "%"}, new BeanPropertyRowMapper<>(Producto.class));
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>();
+        }
+    }
 
 }
